@@ -12,8 +12,10 @@ public class Pasaporte extends JFrame{
 		super("ventana 1 del pasaporte");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(1000, 600);
-		PanelX px=new PanelX();
+		PanelInfo px=new PanelInfo();
 		this.add(px);
+		PanelMenu pm=new PanelMenu();
+		//this.add(pm);
 		this.pack();
 		this.setVisible(true);
 		
