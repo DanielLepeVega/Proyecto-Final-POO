@@ -37,7 +37,7 @@ public class PanelMenu extends JPanel{
 	public PanelMenu(Pasaporte vPass) {
 		super();
 		setBorder(new CompoundBorder());
-		setBackground(UIManager.getColor("InternalFrame.inactiveTitleGradient"));
+		setBackground(Color.WHITE);
 		
 		this.setPreferredSize(new Dimension(1000,600));
 		this.logo = new ImageIcon("logo.png").getImage();
@@ -52,13 +52,13 @@ public class PanelMenu extends JPanel{
 				vPass.cl.next(vPass.panelCont);
 			}
 		});
-		btPasaporte1.setBackground(SystemColor.textHighlight);
-		btPasaporte1.setForeground(SystemColor.controlShadow);
+		btPasaporte1.setBackground(Color.WHITE);
+		btPasaporte1.setForeground(Color.BLACK);
 		btPasaporte1.setText("PASAPORTE 1");
 		btPasaporte1.setFont(new Font("Tahoma", Font.PLAIN, 50));
 		btPasaporte2 = new JButton();
-		btPasaporte2.setForeground(SystemColor.controlShadow);
-		btPasaporte2.setBackground(SystemColor.textHighlight);
+		btPasaporte2.setForeground(Color.BLACK);
+		btPasaporte2.setBackground(Color.LIGHT_GRAY);
 		btPasaporte2.setText("PASAPORTE 2\r\n");
 		btPasaporte2.setFont(new Font("Tahoma", Font.PLAIN, 50));
 		
@@ -147,7 +147,7 @@ public class PanelMenu extends JPanel{
 	
 	public void paintComponent (Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(this.logo,0,0,this.getWidth(),this.getHeight(),this);
+		//g.drawImage(this.logo,0,0,this.getWidth(),this.getHeight(),this);
 		
 	}
 

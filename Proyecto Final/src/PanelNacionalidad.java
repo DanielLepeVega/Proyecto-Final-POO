@@ -16,8 +16,13 @@ import javax.swing.border.CompoundBorder;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.awt.event.ActionEvent;
+import java.awt.SystemColor;
 
 public class PanelNacionalidad extends JPanel{
 	
@@ -67,9 +72,36 @@ public class PanelNacionalidad extends JPanel{
 		Label6 = new JLabel();
 		Label6.setIcon(new ImageIcon("C:\\Users\\yo_da\\Desktop\\ff.png"));
 		btCurp = new JButton();
+		btCurp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (Desktop.isDesktopSupported()) {
+				    try {
+						Desktop.getDesktop().browse(new URI("https://consultas.curp.gob.mx"));
+					} catch (IOException e) {
+						e.printStackTrace();
+					} catch (URISyntaxException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
 		btCurp.setText("Consulta CURP");
 		btCurp.setFont(new Font("Arial", Font.PLAIN, 20));
 		btActa = new JButton();
+		
+		btActa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (Desktop.isDesktopSupported()) {
+				    try {
+						Desktop.getDesktop().browse(new URI("https://www.gob.mx/ActaNacimiento/"));
+					} catch (IOException e) {
+						e.printStackTrace();
+					} catch (URISyntaxException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
 		btActa.setFont(new Font("Arial", Font.PLAIN, 20));
 		btActa.setText("Consulta Acta De Nacimiento");
 		btAtras = new JButton();
@@ -192,7 +224,7 @@ public class PanelNacionalidad extends JPanel{
 	
 	public void paintComponent (Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(this.logo,0,0,this.getWidth(),this.getHeight(),this);
+		//g.drawImage(this.logo,0,0,this.getWidth(),this.getHeight(),this);
 		
 	}
 }

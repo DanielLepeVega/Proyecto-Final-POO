@@ -24,6 +24,7 @@ import javax.swing.JComboBox;
 import java.awt.Color;
 import java.awt.SystemColor;
 import javax.swing.JRadioButton;
+import javax.swing.DefaultComboBoxModel;
 
 public class PanelInfo extends JPanel {
 
@@ -56,9 +57,10 @@ public class PanelInfo extends JPanel {
 	private JButton btAtras,
 					btNext,
 					btSalir;
-	private JComboBox comboBox_1;
+	private JComboBox cbMes;
 
 	private Pasaporte vPass;
+	private JTextField tfDia;
 	/**
 	 * Launch the application.
 	 
@@ -172,6 +174,8 @@ public class PanelInfo extends JPanel {
 		btSalir.setFont(new Font("Arial", Font.PLAIN, 20));
 		btSalir.setText("SALIR");
 		CurrentLayOut = new SpringLayout();
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label12, 275, SpringLayout.NORTH, this);
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfAno, 2, SpringLayout.SOUTH, Label14);
 		CurrentLayOut.putConstraint(SpringLayout.SOUTH, lblFecha, -11, SpringLayout.NORTH, Label12);
 		CurrentLayOut.putConstraint(SpringLayout.EAST, lblFecha, 0, SpringLayout.EAST, Label6);
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label14, 0, SpringLayout.NORTH, Label12);
@@ -266,27 +270,17 @@ public class PanelInfo extends JPanel {
 		this.add(btNext);
 		this.add(btSalir);
 		
-		JComboBox comboBox = new JComboBox();
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, comboBox, 301, SpringLayout.NORTH, this);
-		CurrentLayOut.putConstraint(SpringLayout.SOUTH, Label12, -2, SpringLayout.NORTH, comboBox);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfAno, 0, SpringLayout.NORTH, comboBox);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, comboBox, 36, SpringLayout.WEST, this);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, comboBox, -883, SpringLayout.EAST, this);
-		comboBox.setMaximumRowCount(12);
-		comboBox.setToolTipText("1\r\n2\r\n3\r\n4\r\n5\r\n6\r\n7\r\n8\r\n9\r\n10\r\n11\r\n12");
-		comboBox.setFont(new Font("Arial", Font.PLAIN, 20));
-		add(comboBox);
-		
-		comboBox_1 = new JComboBox();
-		CurrentLayOut.putConstraint(SpringLayout.WEST, Label13, 0, SpringLayout.WEST, comboBox_1);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, comboBox_1, 30, SpringLayout.EAST, comboBox);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, comboBox_1, -703, SpringLayout.EAST, this);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, tfAno, 31, SpringLayout.EAST, comboBox_1);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, comboBox_1, 0, SpringLayout.NORTH, comboBox);
-		comboBox_1.setMaximumRowCount(12);
-		comboBox_1.setToolTipText("Enero\r\nFebrero\r\nMarzo\r\nAbril\r\nMayo\r\nJunio\r\nJulio\r\nAgosto\r\nSeptiembre\r\nSeptiembre\r\nOctubre\r\nNoviembre\r\nDiciembre\r\nSeptiembre\r\nOctubre\r\nNoviembre\r\nDiciembre");
-		comboBox_1.setFont(new Font("Arial", Font.PLAIN, 20));
-		add(comboBox_1);
+		cbMes = new JComboBox();
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, cbMes, 2, SpringLayout.SOUTH, Label13);
+		CurrentLayOut.putConstraint(SpringLayout.WEST, cbMes, 147, SpringLayout.WEST, this);
+		CurrentLayOut.putConstraint(SpringLayout.EAST, cbMes, -703, SpringLayout.EAST, this);
+		cbMes.setModel(new DefaultComboBoxModel(new String[] {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Septiembre", "Octubre", "Noviembre", "Diciembre", "Septiembre", "Octubre", "Noviembre", "Diciembre"}));
+		CurrentLayOut.putConstraint(SpringLayout.WEST, Label13, 0, SpringLayout.WEST, cbMes);
+		CurrentLayOut.putConstraint(SpringLayout.WEST, tfAno, 31, SpringLayout.EAST, cbMes);
+		cbMes.setMaximumRowCount(12);
+		cbMes.setToolTipText("");
+		cbMes.setFont(new Font("Arial", Font.PLAIN, 20));
+		add(cbMes);
 		
 		JRadioButton rdMasculino = new JRadioButton("M");
 		rdMasculino.setSelected(true);
@@ -302,6 +296,13 @@ public class PanelInfo extends JPanel {
 		CurrentLayOut.putConstraint(SpringLayout.WEST, rdFemenino, 20, SpringLayout.EAST, rdMasculino);
 		rdFemenino.setFont(new Font("Arial", Font.PLAIN, 20));
 		add(rdFemenino);
+		
+		tfDia = new JTextField();
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfDia, 0, SpringLayout.NORTH, tfAno);
+		CurrentLayOut.putConstraint(SpringLayout.WEST, tfDia, 0, SpringLayout.WEST, Label2);
+		CurrentLayOut.putConstraint(SpringLayout.EAST, tfDia, 0, SpringLayout.EAST, Label10);
+		tfDia.setFont(new Font("Arial", Font.PLAIN, 20));
+		add(tfDia);
 	}
 
 	/**
@@ -315,7 +316,7 @@ public class PanelInfo extends JPanel {
 
 	public void paintComponent (Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(this.logo,0,0,this.getWidth(),this.getHeight(),this);
+		//g.drawImage(this.logo,0,0,this.getWidth(),this.getHeight(),this);
 		
 	}
 }
