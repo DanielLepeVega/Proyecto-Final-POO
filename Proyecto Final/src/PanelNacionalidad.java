@@ -88,7 +88,6 @@ public class PanelNacionalidad extends JPanel{
 		btCurp.setText("Consulta CURP");
 		btCurp.setFont(new Font("Arial", Font.PLAIN, 20));
 		btActa = new JButton();
-		
 		btActa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (Desktop.isDesktopSupported()) {
@@ -134,9 +133,9 @@ public class PanelNacionalidad extends JPanel{
 		btNumActa.setFont(new Font("Arial", Font.PLAIN, 20));
 	
 		CurrentLayOut = new SpringLayout();
+		CurrentLayOut.putConstraint(SpringLayout.WEST, btActa, 0, SpringLayout.WEST, Label2);
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label6, 0, SpringLayout.NORTH, this);
 		CurrentLayOut.putConstraint(SpringLayout.SOUTH, Label6, -103, SpringLayout.NORTH, Label4);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, btActa, 0, SpringLayout.WEST, Label2);
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, btNumActa, 16, SpringLayout.SOUTH, Label3);
 		CurrentLayOut.putConstraint(SpringLayout.WEST, btNumActa, 0, SpringLayout.WEST, Label2);
 		CurrentLayOut.putConstraint(SpringLayout.EAST, btNumActa, -780, SpringLayout.EAST, this);
@@ -208,7 +207,7 @@ public class PanelNacionalidad extends JPanel{
 		add(lblNewLabel);
 		
 		lblNewLabel_1 = new JLabel("<html>Si no con\u00F3ces tu n\u00FAmero de acta de nacimiento, puedes presionar\r<br/> el siguiente bot\u00F3n para consultarlo</html>");
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, btActa, 18, SpringLayout.SOUTH, lblNewLabel_1);
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, btActa, 4, SpringLayout.SOUTH, lblNewLabel_1);
 		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 16));
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, lblNewLabel_1, 21, SpringLayout.SOUTH, btNumActa);
 		CurrentLayOut.putConstraint(SpringLayout.WEST, lblNewLabel_1, 0, SpringLayout.WEST, Label2);

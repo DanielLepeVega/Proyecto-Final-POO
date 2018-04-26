@@ -9,14 +9,28 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SpringLayout;
+import javax.swing.table.DefaultTableModel;
+
+import com.mysql.jdbc.PreparedStatement;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import java.awt.Canvas;
 import java.awt.Button;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JScrollPane;
@@ -61,6 +75,8 @@ public class PanelInfo extends JPanel {
 
 	private Pasaporte vPass;
 	private JTextField tfDia;
+	private JRadioButton rdFemenino, rdMasculino; 
+	private ButtonGroup bg;
 	/**
 	 * Launch the application.
 	 
@@ -160,6 +176,7 @@ public class PanelInfo extends JPanel {
 		btNext = new JButton();
 		btNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				Insertar();
 				vPass.cl.next(vPass.panelCont);	
 			}
 		});
@@ -270,6 +287,7 @@ public class PanelInfo extends JPanel {
 		this.add(btNext);
 		this.add(btSalir);
 		
+		
 		cbMes = new JComboBox();
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, cbMes, 2, SpringLayout.SOUTH, Label13);
 		CurrentLayOut.putConstraint(SpringLayout.WEST, cbMes, 147, SpringLayout.WEST, this);
@@ -282,7 +300,7 @@ public class PanelInfo extends JPanel {
 		cbMes.setFont(new Font("Arial", Font.PLAIN, 20));
 		add(cbMes);
 		
-		JRadioButton rdMasculino = new JRadioButton("M");
+		rdMasculino = new JRadioButton("M");
 		rdMasculino.setSelected(true);
 		rdMasculino.setBackground(Color.WHITE);
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, rdMasculino, -1, SpringLayout.NORTH, tfAno);
@@ -290,12 +308,15 @@ public class PanelInfo extends JPanel {
 		rdMasculino.setFont(new Font("Arial", Font.PLAIN, 20));
 		add(rdMasculino);
 		
-		JRadioButton rdFemenino = new JRadioButton("F");
+		rdFemenino = new JRadioButton("F");
 		rdFemenino.setBackground(Color.WHITE);
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, rdFemenino, -1, SpringLayout.NORTH, tfAno);
 		CurrentLayOut.putConstraint(SpringLayout.WEST, rdFemenino, 20, SpringLayout.EAST, rdMasculino);
 		rdFemenino.setFont(new Font("Arial", Font.PLAIN, 20));
 		add(rdFemenino);
+		bg = new ButtonGroup();
+		bg.add(rdMasculino);
+		bg.add(rdFemenino);
 		
 		tfDia = new JTextField();
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfDia, 0, SpringLayout.NORTH, tfAno);
@@ -319,4 +340,61 @@ public class PanelInfo extends JPanel {
 		//g.drawImage(this.logo,0,0,this.getWidth(),this.getHeight(),this);
 		
 	}
+	
+	
+	public void Insertar() {
+		Integer[] meses = {1,2,3,4,5,6,7,8,9,10,11,12};
+		Connection conexion = null;
+		java.sql.PreparedStatement stmt = null;
+		java.util.Date nacimiento;
+		try {
+			conexion = DBUtil.getConnection(DBType.MYSQL);
+			
+			String nombre, apep,apem,ciudad,estado,nacionalidad,fecha,mes,sexo;
+			sexo = "M";
+			nombre = tfNombre.getText();
+			apep = tfApeP.getText();
+			apem = tfApeM.getText();
+			ciudad = tfCiudad.getText();
+			estado = tfEstado.getText();
+			nacionalidad = tfNacionalidad.getText();
+			mes = meses[cbMes.getSelectedIndex()-1].toString();
+			fecha = (tfAno.getText() + "-" + mes +"-" + tfDia.getText());
+			nacimiento = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
+			Date sqlFecha = new Date(nacimiento.getTime());
+			if(rdMasculino.isSelected()) {
+				sexo = "M";
+			}else if(rdFemenino.isSelected()){
+				sexo = "F";
+			}
+			System.out.println(sqlFecha);
+			stmt = conexion.prepareStatement("INSERT INTO inf " + " VALUES (NULL,'" + nombre +"', '" + apep + "','" + apem + "', ?, '"+ sexo +"', '" + estado +"', '" + ciudad + "','" + nacionalidad + "','','0')");
+			stmt.setDate(1, sqlFecha);
+			stmt.execute();
+		} catch (SQLException e) {
+			DBUtil.processException(e);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if (conexion != null) {
+				try {
+					conexion.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 }
