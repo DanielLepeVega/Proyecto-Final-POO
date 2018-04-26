@@ -44,7 +44,7 @@ public class PanelMenu extends JPanel{
 		Label1 = new JLabel();
 		Label1.setBackground(Color.WHITE);
 		Label1.setText("MENÚ PRINCIPAL");
-		Label1.setForeground(Color.BLUE);
+		Label1.setForeground(Color.DARK_GRAY);
 		Label1.setFont(new Font("Tahoma", Font.BOLD, 60));
 		btPasaporte1 = new JButton();
 		btPasaporte1.addActionListener(new ActionListener() {

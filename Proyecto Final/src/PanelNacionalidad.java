@@ -102,7 +102,7 @@ public class PanelNacionalidad extends JPanel{
 			}
 		});
 		btActa.setFont(new Font("Arial", Font.PLAIN, 20));
-		btActa.setText("Consulta Acta De Nacimiento");
+		btActa.setText("Consulta Acta de Nacimiento");
 		btAtras = new JButton();
 		btAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -110,7 +110,7 @@ public class PanelNacionalidad extends JPanel{
 			}
 		});
 		btAtras.setFont(new Font("Arial", Font.PLAIN, 20));
-		btAtras.setText("ATRÁS");
+		btAtras.setText("Atr\u00E1s");
 		btNext = new JButton();
 		btNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -118,7 +118,7 @@ public class PanelNacionalidad extends JPanel{
 			}
 		});
 		btNext.setFont(new Font("Arial", Font.PLAIN, 20));
-		btNext.setText("SIGUIENTE");
+		btNext.setText("Siguiente");
 		btSalir = new JButton();
 		btSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -126,13 +126,15 @@ public class PanelNacionalidad extends JPanel{
 			}
 		});
 		btSalir.setFont(new Font("Arial", Font.PLAIN, 20));
-		btSalir.setText("SALIR");
+		btSalir.setText("Salir");
 		tfCurp = new JTextField();
 		tfCurp.setFont(new Font("Arial", Font.PLAIN, 20));
 		btNumActa = new JTextField();
 		btNumActa.setFont(new Font("Arial", Font.PLAIN, 20));
 	
 		CurrentLayOut = new SpringLayout();
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, btSalir, 0, SpringLayout.NORTH, btAtras);
+		CurrentLayOut.putConstraint(SpringLayout.WEST, btSalir, 24, SpringLayout.EAST, btNext);
 		CurrentLayOut.putConstraint(SpringLayout.WEST, btActa, 0, SpringLayout.WEST, Label2);
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label6, 0, SpringLayout.NORTH, this);
 		CurrentLayOut.putConstraint(SpringLayout.SOUTH, Label6, -103, SpringLayout.NORTH, Label4);
@@ -159,8 +161,6 @@ public class PanelNacionalidad extends JPanel{
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, btNext, 0, SpringLayout.NORTH, btAtras);
 		CurrentLayOut.putConstraint(SpringLayout.WEST, btNext, 21, SpringLayout.EAST, btAtras);
 		CurrentLayOut.putConstraint(SpringLayout.SOUTH, btAtras, -21, SpringLayout.SOUTH, this);
-		CurrentLayOut.putConstraint(SpringLayout.SOUTH, btSalir, -21, SpringLayout.SOUTH, this);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, btSalir, -31, SpringLayout.EAST, this);
 		
 		initialize();
 		setUpPanel();
