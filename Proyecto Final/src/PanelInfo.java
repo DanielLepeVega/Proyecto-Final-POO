@@ -172,15 +172,15 @@ public class PanelInfo extends JPanel {
 			}
 		});
 		btAtras.setFont(new Font("Arial", Font.PLAIN, 20));
-		btAtras.setText("ATR\u00C1S");
+		btAtras.setText("Atr\u00E1s");
 		btNext = new JButton();
 		btNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Insertar();
+				//Insertar();
 				vPass.cl.next(vPass.panelCont);	
 			}
 		});
-		btNext.setText("SIGUIENTE");
+		btNext.setText("Siguiente");
 		btNext.setFont(new Font("Arial", Font.PLAIN, 20));
 		btSalir = new JButton();
 		btSalir.addActionListener(new ActionListener() {
@@ -189,8 +189,12 @@ public class PanelInfo extends JPanel {
 			}
 		});
 		btSalir.setFont(new Font("Arial", Font.PLAIN, 20));
-		btSalir.setText("SALIR");
+		btSalir.setText("Salir");
 		CurrentLayOut = new SpringLayout();
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label4, 0, SpringLayout.NORTH, Label10);
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfNacionalidad, 1, SpringLayout.NORTH, tfCiudad);
+		CurrentLayOut.putConstraint(SpringLayout.WEST, tfNacionalidad, 60, SpringLayout.EAST, tfEstado);
+		CurrentLayOut.putConstraint(SpringLayout.EAST, tfNacionalidad, -196, SpringLayout.EAST, this);
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label12, 275, SpringLayout.NORTH, this);
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfAno, 2, SpringLayout.SOUTH, Label14);
 		CurrentLayOut.putConstraint(SpringLayout.SOUTH, lblFecha, -11, SpringLayout.NORTH, Label12);
@@ -228,11 +232,6 @@ public class PanelInfo extends JPanel {
 		CurrentLayOut.putConstraint(SpringLayout.WEST, Label10, 36, SpringLayout.WEST, this);
 		CurrentLayOut.putConstraint(SpringLayout.WEST, Label8, 36, SpringLayout.WEST, this);
 		CurrentLayOut.putConstraint(SpringLayout.WEST, Label6, 36, SpringLayout.WEST, this);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfNacionalidad, 1, SpringLayout.NORTH, tfCiudad);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, tfNacionalidad, 0, SpringLayout.WEST, Label4);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, tfNacionalidad, -168, SpringLayout.EAST, this);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label4, 0, SpringLayout.NORTH, Label10);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, Label4, 0, SpringLayout.WEST, btAtras);
 		CurrentLayOut.putConstraint(SpringLayout.EAST, Label11, -645, SpringLayout.EAST, this);
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfEstado, 1, SpringLayout.NORTH, tfCiudad);
 		CurrentLayOut.putConstraint(SpringLayout.WEST, tfEstado, 0, SpringLayout.WEST, Label11);
@@ -257,6 +256,7 @@ public class PanelInfo extends JPanel {
 		repaint();
 	}
 
+	@SuppressWarnings("unchecked")
 	private void setUpPanel() {
 		// TODO Auto-generated method stub
 		this.setLayout(CurrentLayOut);
@@ -301,6 +301,7 @@ public class PanelInfo extends JPanel {
 		add(cbMes);
 		
 		rdMasculino = new JRadioButton("M");
+		CurrentLayOut.putConstraint(SpringLayout.EAST, Label4, 0, SpringLayout.EAST, rdMasculino);
 		rdMasculino.setSelected(true);
 		rdMasculino.setBackground(Color.WHITE);
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, rdMasculino, -1, SpringLayout.NORTH, tfAno);

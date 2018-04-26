@@ -11,17 +11,20 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PanelCorreo extends JPanel{
 
 	private SpringLayout CurrentLayOut;
 	private JFrame frame;
 	private JLabel Label1;
-	private JTextField textField;
-	private JTextField textField_1;
-	
-	public PanelCorreo() {
+	private JTextField tfMail;
+	private JTextField tfMailConf;
+	private Pasaporte vPass;
+	public PanelCorreo(Pasaporte vPass) {
 		super();
+		this.vPass = vPass; 
 		setBorder(new CompoundBorder());
 		setBackground(Color.WHITE);
 		
@@ -38,7 +41,7 @@ public class PanelCorreo extends JPanel{
 		setUpPanel();
 		repaint();
 	}
-	
+	/*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -51,7 +54,7 @@ public class PanelCorreo extends JPanel{
 			}
 		});
 	}
-	
+	*/
 	private void setUpPanel() {
 		// TODO Auto-generated method stub
 		this.setLayout(CurrentLayOut);
@@ -61,31 +64,35 @@ public class PanelCorreo extends JPanel{
 		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 20));
 		add(lblNewLabel);
 		
-		textField = new JTextField();
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, textField, 6, SpringLayout.SOUTH, lblNewLabel);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, textField, 222, SpringLayout.WEST, this);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, textField, -174, SpringLayout.EAST, this);
-		textField.setFont(new Font("Arial", Font.PLAIN, 20));
-		add(textField);
-		textField.setColumns(10);
+		tfMail = new JTextField();
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfMail, 6, SpringLayout.SOUTH, lblNewLabel);
+		CurrentLayOut.putConstraint(SpringLayout.WEST, tfMail, 222, SpringLayout.WEST, this);
+		CurrentLayOut.putConstraint(SpringLayout.EAST, tfMail, -174, SpringLayout.EAST, this);
+		tfMail.setFont(new Font("Arial", Font.PLAIN, 20));
+		add(tfMail);
+		tfMail.setColumns(10);
 		
-		JButton btnNewButton = new JButton("Atr\u00E1s");
-		btnNewButton.setFont(new Font("Arial", Font.PLAIN, 20));
-		add(btnNewButton);
+		JButton btAtras = new JButton("Atr\u00E1s");
+		btAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				vPass.cl.previous(vPass.panelCont);
+			}
+		});
+		CurrentLayOut.putConstraint(SpringLayout.SOUTH, btAtras, -10, SpringLayout.SOUTH, this);
+		btAtras.setFont(new Font("Arial", Font.PLAIN, 20));
+		add(btAtras);
 		
-		JButton btnNewButton_1 = new JButton("Siguiente");
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, btnNewButton, 0, SpringLayout.NORTH, btnNewButton_1);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, btnNewButton, -22, SpringLayout.WEST, btnNewButton_1);
-		btnNewButton_1.setFont(new Font("Arial", Font.PLAIN, 20));
-		add(btnNewButton_1);
-		
-		JButton btnNewButton_2 = new JButton("Salir");
-		CurrentLayOut.putConstraint(SpringLayout.EAST, btnNewButton_1, -20, SpringLayout.WEST, btnNewButton_2);
-		CurrentLayOut.putConstraint(SpringLayout.SOUTH, btnNewButton_2, -10, SpringLayout.SOUTH, this);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, btnNewButton_1, 0, SpringLayout.NORTH, btnNewButton_2);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, btnNewButton_2, -55, SpringLayout.EAST, this);
-		btnNewButton_2.setFont(new Font("Arial", Font.PLAIN, 20));
-		add(btnNewButton_2);
+		JButton btSalir = new JButton("Salir");
+		btSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				vPass.dispose();
+			}
+		});
+		CurrentLayOut.putConstraint(SpringLayout.EAST, btAtras, -159, SpringLayout.WEST, btSalir);
+		CurrentLayOut.putConstraint(SpringLayout.SOUTH, btSalir, -10, SpringLayout.SOUTH, this);
+		CurrentLayOut.putConstraint(SpringLayout.EAST, btSalir, -55, SpringLayout.EAST, this);
+		btSalir.setFont(new Font("Arial", Font.PLAIN, 20));
+		add(btSalir);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
 		CurrentLayOut.putConstraint(SpringLayout.WEST, lblNewLabel_1, 10, SpringLayout.WEST, this);
@@ -100,13 +107,13 @@ public class PanelCorreo extends JPanel{
 		lblNewLabel_2.setFont(new Font("Arial", Font.PLAIN, 20));
 		add(lblNewLabel_2);
 		
-		JButton btnNewButton_3 = new JButton("Enviar");
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, btnNewButton_3, 493, SpringLayout.NORTH, this);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, btnNewButton_3, 0, SpringLayout.WEST, btnNewButton_1);
-		CurrentLayOut.putConstraint(SpringLayout.SOUTH, btnNewButton_3, -23, SpringLayout.NORTH, btnNewButton_1);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, btnNewButton_3, -146, SpringLayout.EAST, this);
-		btnNewButton_3.setFont(new Font("Arial", Font.PLAIN, 20));
-		add(btnNewButton_3);
+		JButton btEnviar = new JButton("Enviar");
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, btEnviar, 0, SpringLayout.NORTH, btAtras);
+		CurrentLayOut.putConstraint(SpringLayout.WEST, btEnviar, 19, SpringLayout.EAST, btAtras);
+		CurrentLayOut.putConstraint(SpringLayout.SOUTH, btEnviar, -10, SpringLayout.SOUTH, this);
+		CurrentLayOut.putConstraint(SpringLayout.EAST, btEnviar, -149, SpringLayout.EAST, this);
+		btEnviar.setFont(new Font("Arial", Font.PLAIN, 20));
+		add(btEnviar);
 		
 		JLabel lblNewLabel_3 = new JLabel("Nombre Completo");
 		CurrentLayOut.putConstraint(SpringLayout.WEST, lblNewLabel_3, 64, SpringLayout.WEST, this);
@@ -170,18 +177,18 @@ public class PanelCorreo extends JPanel{
 		add(lblNewLabel_12);
 		
 		JLabel lblNewLabel_13 = new JLabel("Confirma tu correo");
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, lblNewLabel_13, 6, SpringLayout.SOUTH, textField);
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, lblNewLabel_13, 6, SpringLayout.SOUTH, tfMail);
 		CurrentLayOut.putConstraint(SpringLayout.WEST, lblNewLabel_13, 0, SpringLayout.WEST, lblNewLabel);
 		lblNewLabel_13.setFont(new Font("Arial", Font.PLAIN, 20));
 		add(lblNewLabel_13);
 		
-		textField_1 = new JTextField();
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, textField_1, 6, SpringLayout.SOUTH, lblNewLabel_13);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, textField_1, 222, SpringLayout.WEST, this);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, textField_1, 0, SpringLayout.EAST, textField);
-		textField_1.setFont(new Font("Arial", Font.PLAIN, 20));
-		add(textField_1);
-		textField_1.setColumns(10);
+		tfMailConf = new JTextField();
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfMailConf, 6, SpringLayout.SOUTH, lblNewLabel_13);
+		CurrentLayOut.putConstraint(SpringLayout.WEST, tfMailConf, 222, SpringLayout.WEST, this);
+		CurrentLayOut.putConstraint(SpringLayout.EAST, tfMailConf, 0, SpringLayout.EAST, tfMail);
+		tfMailConf.setFont(new Font("Arial", Font.PLAIN, 20));
+		add(tfMailConf);
+		tfMailConf.setColumns(10);
 	}
 	
 	private void initialize() {
