@@ -15,6 +15,8 @@ import java.awt.SystemColor;
 import java.awt.Color;
 import javax.swing.UIManager;
 import javax.swing.border.CompoundBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PanelMenu extends JPanel{
 	
@@ -22,8 +24,8 @@ public class PanelMenu extends JPanel{
 	private JFrame frame;
 	private Image logo;
 	private JLabel Label1;
-	private JButton B1,
-					B2;
+	private JButton btPasaporte1,
+					btPasaporte2;
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_1;
 	private JLabel lblNewLabel_2;
@@ -32,7 +34,7 @@ public class PanelMenu extends JPanel{
 	private JLabel lblNewLabel_5;
 	private JLabel lblNewLabel_6;
 	
-	public PanelMenu() {
+	public PanelMenu(Pasaporte vPass) {
 		super();
 		setBorder(new CompoundBorder());
 		setBackground(UIManager.getColor("InternalFrame.inactiveTitleGradient"));
@@ -41,25 +43,30 @@ public class PanelMenu extends JPanel{
 		this.logo = new ImageIcon("logo.png").getImage();
 		Label1 = new JLabel();
 		Label1.setBackground(Color.WHITE);
-		Label1.setText("MEN\u00DA PRINCIPAL\r\n\r\n\r\n");
+		Label1.setText("MENÚ PRINCIPAL");
 		Label1.setForeground(Color.BLUE);
 		Label1.setFont(new Font("Tahoma", Font.BOLD, 60));
-		B1 = new JButton();
-		B1.setBackground(SystemColor.textHighlight);
-		B1.setForeground(SystemColor.controlShadow);
-		B1.setText("PASAPORTE 1");
-		B1.setFont(new Font("Tahoma", Font.PLAIN, 50));
-		B2 = new JButton();
-		B2.setForeground(SystemColor.controlShadow);
-		B2.setBackground(SystemColor.textHighlight);
-		B2.setText("PASAPORTE 2\r\n");
-		B2.setFont(new Font("Tahoma", Font.PLAIN, 50));
+		btPasaporte1 = new JButton();
+		btPasaporte1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				vPass.cl.next(vPass.panelCont);
+			}
+		});
+		btPasaporte1.setBackground(SystemColor.textHighlight);
+		btPasaporte1.setForeground(SystemColor.controlShadow);
+		btPasaporte1.setText("PASAPORTE 1");
+		btPasaporte1.setFont(new Font("Tahoma", Font.PLAIN, 50));
+		btPasaporte2 = new JButton();
+		btPasaporte2.setForeground(SystemColor.controlShadow);
+		btPasaporte2.setBackground(SystemColor.textHighlight);
+		btPasaporte2.setText("PASAPORTE 2\r\n");
+		btPasaporte2.setFont(new Font("Tahoma", Font.PLAIN, 50));
 		
 		CurrentLayOut = new SpringLayout();
-		CurrentLayOut.putConstraint(SpringLayout.WEST, B2, 0, SpringLayout.WEST, B1);
-		CurrentLayOut.putConstraint(SpringLayout.SOUTH, B2, -122, SpringLayout.SOUTH, this);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, B1, 89, SpringLayout.SOUTH, Label1);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, B1, 74, SpringLayout.WEST, this);
+		CurrentLayOut.putConstraint(SpringLayout.WEST, btPasaporte2, 0, SpringLayout.WEST, btPasaporte1);
+		CurrentLayOut.putConstraint(SpringLayout.SOUTH, btPasaporte2, -122, SpringLayout.SOUTH, this);
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, btPasaporte1, 89, SpringLayout.SOUTH, Label1);
+		CurrentLayOut.putConstraint(SpringLayout.WEST, btPasaporte1, 74, SpringLayout.WEST, this);
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label1, 28, SpringLayout.NORTH, this);
 		CurrentLayOut.putConstraint(SpringLayout.WEST, Label1, 224, SpringLayout.WEST, this);
 		
@@ -67,7 +74,7 @@ public class PanelMenu extends JPanel{
 		setUpPanel();
 		repaint();
 	}
-	
+	/*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -80,16 +87,16 @@ public class PanelMenu extends JPanel{
 			}
 		});
 	}
-	
+	*/
 	private void setUpPanel() {
 		// TODO Auto-generated method stub
 		this.setLayout(CurrentLayOut);
 		this.add(Label1);
-		this.add(B1);
-		this.add(B2);
+		this.add(btPasaporte1);
+		this.add(btPasaporte2);
 		
 		lblNewLabel = new JLabel("PASOS A SEGUIR:");
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, lblNewLabel, 0, SpringLayout.NORTH, B1);
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, lblNewLabel, 0, SpringLayout.NORTH, btPasaporte1);
 		CurrentLayOut.putConstraint(SpringLayout.EAST, lblNewLabel, -137, SpringLayout.EAST, this);
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 30));
 		add(lblNewLabel);

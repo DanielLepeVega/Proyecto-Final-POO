@@ -58,9 +58,10 @@ public class PanelInfo extends JPanel {
 					btSalir;
 	private JComboBox comboBox_1;
 
+	private Pasaporte vPass;
 	/**
 	 * Launch the application.
-	 */
+	 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -77,8 +78,9 @@ public class PanelInfo extends JPanel {
 	/**
 	 * Create the application.
 	 */
-	public PanelInfo() {
+	public PanelInfo(Pasaporte vPass) {
 		super();
+		this.vPass = vPass;
 		setBackground(Color.WHITE);
 		
 		this.setPreferredSize(new Dimension(1000,600));
@@ -146,15 +148,25 @@ public class PanelInfo extends JPanel {
 		tfApeM = new JTextField();
 		tfApeM.setFont(new Font("Arial", Font.PLAIN, 20));
 		btAtras = new JButton();
+		btAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				vPass.cl.previous(vPass.panelCont);
+			}
+		});
 		btAtras.setFont(new Font("Arial", Font.PLAIN, 20));
 		btAtras.setText("ATR\u00C1S");
 		btNext = new JButton();
+		btNext.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				vPass.cl.next(vPass.panelCont);	
+			}
+		});
 		btNext.setText("SIGUIENTE");
 		btNext.setFont(new Font("Arial", Font.PLAIN, 20));
 		btSalir = new JButton();
 		btSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				vPass.dispose();
 			}
 		});
 		btSalir.setFont(new Font("Arial", Font.PLAIN, 20));
