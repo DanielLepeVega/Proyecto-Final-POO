@@ -123,7 +123,7 @@ public class PanelInfo extends JPanel {
 		Label6.setFont(new Font("Arial", Font.BOLD, 20));
 		Label6.setText("Lugar de Nacimiento");
 		Label7 = new JLabel();
-		Label7.setIcon(new ImageIcon("C:\\Users\\yo_da\\Desktop\\ff.png"));
+		Label7.setIcon(new ImageIcon("ff.png"));
 		Label8 = new JLabel();
 		Label8.setText("Autoridadsita");
 		Label8.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 20));

@@ -43,32 +43,31 @@ public class PanelMenu extends JPanel{
 		this.logo = new ImageIcon("logo.png").getImage();
 		Label1 = new JLabel();
 		Label1.setBackground(Color.WHITE);
-		Label1.setText("MENÚ PRINCIPAL");
+		Label1.setText("TR\u00C1MITE PASAPORTE MEXICANO");
 		Label1.setForeground(Color.DARK_GRAY);
-		Label1.setFont(new Font("Tahoma", Font.BOLD, 60));
+		Label1.setFont(new Font("Tahoma", Font.BOLD, 54));
 		btPasaporte1 = new JButton();
 		btPasaporte1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				vPass.cl.next(vPass.panelCont);
 			}
 		});
-		btPasaporte1.setBackground(Color.WHITE);
-		btPasaporte1.setForeground(Color.BLACK);
-		btPasaporte1.setText("PASAPORTE 1");
-		btPasaporte1.setFont(new Font("Tahoma", Font.PLAIN, 50));
+		
+		btPasaporte1.setText("Pasaporte Ordinario");
+		btPasaporte1.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		btPasaporte2 = new JButton();
-		btPasaporte2.setForeground(Color.BLACK);
-		btPasaporte2.setBackground(Color.LIGHT_GRAY);
-		btPasaporte2.setText("PASAPORTE 2\r\n");
-		btPasaporte2.setFont(new Font("Tahoma", Font.PLAIN, 50));
+	
+		btPasaporte2.setText("Pasaporte Oficial");
+		btPasaporte2.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		
 		CurrentLayOut = new SpringLayout();
-		CurrentLayOut.putConstraint(SpringLayout.WEST, btPasaporte2, 0, SpringLayout.WEST, btPasaporte1);
-		CurrentLayOut.putConstraint(SpringLayout.SOUTH, btPasaporte2, -122, SpringLayout.SOUTH, this);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, btPasaporte1, 89, SpringLayout.SOUTH, Label1);
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label1, 47, SpringLayout.NORTH, this);
+		CurrentLayOut.putConstraint(SpringLayout.EAST, Label1, -33, SpringLayout.EAST, this);
+		CurrentLayOut.putConstraint(SpringLayout.EAST, btPasaporte2, 0, SpringLayout.EAST, btPasaporte1);
 		CurrentLayOut.putConstraint(SpringLayout.WEST, btPasaporte1, 74, SpringLayout.WEST, this);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label1, 28, SpringLayout.NORTH, this);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, Label1, 224, SpringLayout.WEST, this);
+		CurrentLayOut.putConstraint(SpringLayout.SOUTH, btPasaporte1, -259, SpringLayout.SOUTH, this);
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, btPasaporte2, 71, SpringLayout.SOUTH, btPasaporte1);
+		CurrentLayOut.putConstraint(SpringLayout.WEST, btPasaporte2, 0, SpringLayout.WEST, btPasaporte1);
 		
 		initialize();
 		setUpPanel();
@@ -96,7 +95,7 @@ public class PanelMenu extends JPanel{
 		this.add(btPasaporte2);
 		
 		lblNewLabel = new JLabel("PASOS A SEGUIR:");
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, lblNewLabel, 0, SpringLayout.NORTH, btPasaporte1);
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, lblNewLabel, 70, SpringLayout.SOUTH, Label1);
 		CurrentLayOut.putConstraint(SpringLayout.EAST, lblNewLabel, -137, SpringLayout.EAST, this);
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 30));
 		add(lblNewLabel);
