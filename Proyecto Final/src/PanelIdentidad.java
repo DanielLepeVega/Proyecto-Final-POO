@@ -38,22 +38,8 @@ public class PanelIdentidad extends JPanel{
 		setUpPanel();
 		repaint();
 	}
-	/*
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PanelIdentidad window = new PanelIdentidad();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	*/
+
 	private void setUpPanel() {
-		// TODO Auto-generated method stub
 		this.setLayout(CurrentLayOut);
 		this.add(Label1);
 		

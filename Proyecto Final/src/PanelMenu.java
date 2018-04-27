@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 import java.awt.Font;
@@ -19,13 +20,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class PanelMenu extends JPanel{
-	
-	private SpringLayout CurrentLayOut;
 	private JFrame frame;
-	private Image logo;
 	private JLabel Label1;
-	private JButton btPasaporte1,
-					btPasaporte2;
+	private JButton bt1Ano;
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_1;
 	private JLabel lblNewLabel_2;
@@ -33,121 +30,140 @@ public class PanelMenu extends JPanel{
 	private JLabel lblNewLabel_4;
 	private JLabel lblNewLabel_5;
 	private JLabel lblNewLabel_6;
-	
+	private Pasaporte vPass;
 	public PanelMenu(Pasaporte vPass) {
 		super();
+		String[] costos = {"580","1205","1660","2550"};
+		String[] vigencia = {"1 Año","3 Años","6 Años","10 Años"};
+		this.vPass = vPass;
 		setBorder(new CompoundBorder());
 		setBackground(Color.WHITE);
 		
 		this.setPreferredSize(new Dimension(1000,600));
-		this.logo = new ImageIcon("logo.png").getImage();
 		Label1 = new JLabel();
+		Label1.setBounds(49, 47, 918, 66);
 		Label1.setBackground(Color.WHITE);
 		Label1.setText("TR\u00C1MITE PASAPORTE MEXICANO");
 		Label1.setForeground(Color.DARK_GRAY);
 		Label1.setFont(new Font("Tahoma", Font.BOLD, 54));
-		btPasaporte1 = new JButton();
-		btPasaporte1.addActionListener(new ActionListener() {
+		bt1Ano = new JButton();
+		bt1Ano.setBounds(468, 193, 255, 57);
+		bt1Ano.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				vPass.DatosNecesarios.add(costos[0]);
+				vPass.DatosNecesarios.add(vigencia[0]);
 				vPass.cl.next(vPass.panelCont);
 			}
 		});
 		
-		btPasaporte1.setText("Pasaporte Ordinario");
-		btPasaporte1.setFont(new Font("Tahoma", Font.PLAIN, 40));
-		btPasaporte2 = new JButton();
-	
-		btPasaporte2.setText("Pasaporte Oficial");
-		btPasaporte2.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		bt1Ano.setText("1 A\u00F1o");
+		bt1Ano.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		
-		CurrentLayOut = new SpringLayout();
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label1, 47, SpringLayout.NORTH, this);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, Label1, -33, SpringLayout.EAST, this);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, btPasaporte2, 0, SpringLayout.EAST, btPasaporte1);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, btPasaporte1, 74, SpringLayout.WEST, this);
-		CurrentLayOut.putConstraint(SpringLayout.SOUTH, btPasaporte1, -259, SpringLayout.SOUTH, this);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, btPasaporte2, 71, SpringLayout.SOUTH, btPasaporte1);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, btPasaporte2, 0, SpringLayout.WEST, btPasaporte1);
-		
-		initialize();
-		setUpPanel();
-		repaint();
-	}
-	/*
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PanelMenu window = new PanelMenu();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		JButton bt3Anos = new JButton();
+		bt3Anos.setBounds(468, 274, 255, 57);
+		bt3Anos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				vPass.DatosNecesarios.add(costos[1]);
+				vPass.DatosNecesarios.add(vigencia[1]);
+				vPass.cl.next(vPass.panelCont);
 			}
 		});
-	}
-	*/
-	private void setUpPanel() {
-		// TODO Auto-generated method stub
-		this.setLayout(CurrentLayOut);
+		setLayout(null);
+		bt3Anos.setText("3 A\u00F1os");
+		bt3Anos.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		add(bt3Anos);
+		
+		JButton bt6Anos = new JButton();
+		bt6Anos.setBounds(468, 362, 255, 57);
+		bt6Anos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				vPass.DatosNecesarios.add(costos[2]);
+				vPass.DatosNecesarios.add(vigencia[2]);
+				vPass.cl.next(vPass.panelCont);
+			}
+		});
+		bt6Anos.setText("6 A\u00F1os");
+		bt6Anos.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		add(bt6Anos);
+		
+		JButton bt10Anos = new JButton();
+		bt10Anos.setBounds(468, 451, 255, 57);
+		bt10Anos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				vPass.DatosNecesarios.add(costos[3]);
+				vPass.DatosNecesarios.add(vigencia[3]);
+				vPass.cl.next(vPass.panelCont);
+			}
+		});
+		bt10Anos.setText("10 A\u00F1os");
+		bt10Anos.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		add(bt10Anos);
+		
+		lblNewLabel_3 = new JLabel("<html>Recibir un correo de validaci\u00F3n\r<br/>donde vendr\u00E1 la informaci\u00F3n de su cita.\r</html>");
+		lblNewLabel_3.setBounds(43, 464, 343, 48);
+		lblNewLabel_3.setFont(new Font("Arial", Font.PLAIN, 20));
+		add(lblNewLabel_3);
+		
+		lblNewLabel_2 = new JLabel("<html>Presentarse con identifiaci\u00F3n solicitada,\r<br/>en el lugar y hora indicado,\r<br/>para tomarle las fotos y validar\r<br/>su informaci\u00F3n en persona<html>");
+		lblNewLabel_2.setBounds(43, 330, 346, 96);
+		lblNewLabel_2.setFont(new Font("Arial", Font.PLAIN, 20));
+		add(lblNewLabel_2);
 		this.add(Label1);
-		this.add(btPasaporte1);
-		this.add(btPasaporte2);
+		this.add(bt1Ano);
 		
 		lblNewLabel = new JLabel("PASOS A SEGUIR:");
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, lblNewLabel, 70, SpringLayout.SOUTH, Label1);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, lblNewLabel, -137, SpringLayout.EAST, this);
+		lblNewLabel.setBounds(43, 148, 271, 35);
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 30));
 		add(lblNewLabel);
 		
 		lblNewLabel_1 = new JLabel("<html>Llenar toda la informaci\u00F3n\r<br/>solicitada en \u00E9ste tr\u00E1mite</html>");
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, lblNewLabel_1, 23, SpringLayout.SOUTH, lblNewLabel);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, lblNewLabel_1, 0, SpringLayout.WEST, lblNewLabel);
+		lblNewLabel_1.setBounds(43, 262, 226, 48);
 		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 20));
 		add(lblNewLabel_1);
 		
-		lblNewLabel_2 = new JLabel("<html>Presentarse con identifiaci\u00F3n solicitada,\r<br/>en el lugar y hora indicado,\r<br/>para tomarle las fotos y validar\r<br/>su informaci\u00F3n en persona<html>");
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, lblNewLabel_2, 45, SpringLayout.SOUTH, lblNewLabel_1);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, lblNewLabel_2, 0, SpringLayout.WEST, lblNewLabel);
-		lblNewLabel_2.setFont(new Font("Arial", Font.PLAIN, 20));
-		add(lblNewLabel_2);
-		
-		lblNewLabel_3 = new JLabel("<html>Recibir un correo con la informaci\u00F3n\r<br/>digitalizada que podr\u00E1 usar\r<br/>como documento oficial</html>");
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, lblNewLabel_3, 47, SpringLayout.SOUTH, lblNewLabel_2);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, lblNewLabel_3, 0, SpringLayout.WEST, lblNewLabel);
-		lblNewLabel_3.setFont(new Font("Arial", Font.PLAIN, 20));
-		add(lblNewLabel_3);
-		
-		lblNewLabel_4 = new JLabel("1.-");
+		lblNewLabel_4 = new JLabel("2.-");
+		lblNewLabel_4.setBounds(14, 262, 23, 24);
 		lblNewLabel_4.setFont(new Font("Arial", Font.BOLD, 20));
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, lblNewLabel_4, 0, SpringLayout.NORTH, lblNewLabel_1);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, lblNewLabel_4, -35, SpringLayout.WEST, lblNewLabel_1);
 		add(lblNewLabel_4);
 		
-		lblNewLabel_5 = new JLabel("2.-");
+		lblNewLabel_5 = new JLabel("3.-");
+		lblNewLabel_5.setBounds(10, 331, 23, 24);
 		lblNewLabel_5.setFont(new Font("Arial", Font.BOLD, 20));
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, lblNewLabel_5, 0, SpringLayout.NORTH, lblNewLabel_2);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, lblNewLabel_5, 0, SpringLayout.WEST, lblNewLabel_4);
 		add(lblNewLabel_5);
 		
-		lblNewLabel_6 = new JLabel("3.-");
+		lblNewLabel_6 = new JLabel("4.-");
+		lblNewLabel_6.setBounds(14, 465, 23, 24);
 		lblNewLabel_6.setFont(new Font("Arial", Font.BOLD, 20));
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, lblNewLabel_6, 0, SpringLayout.NORTH, lblNewLabel_3);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, lblNewLabel_6, 0, SpringLayout.WEST, lblNewLabel_4);
 		add(lblNewLabel_6);
 		
-	}
-	
-	private void initialize() {
-		frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.X_AXIS));
-	}
-	
-	public void paintComponent (Graphics g) {
-		super.paintComponent(g);
-		//g.drawImage(this.logo,0,0,this.getWidth(),this.getHeight(),this);
+		JButton btAyuda = new JButton("?");
+		btAyuda.setBounds(850, 369, 60, 57);
+		btAyuda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ImageIcon precios = new ImageIcon("img//precios.jpeg");
+				JOptionPane.showMessageDialog(null, "","Precios", JOptionPane.INFORMATION_MESSAGE,precios);
+			}
+		});
+		btAyuda.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 22));
+		add(btAyuda);
 		
+				
+		JLabel label = new JLabel("1.-");
+		label.setBounds(14, 194, 23, 24);
+		label.setFont(new Font("Arial", Font.BOLD, 20));
+		add(label);
+		
+		JLabel lblseleccionarLaVigencia = new JLabel("<html>Seleccionar la vigencia que tendr\u00E1\r<br/>su pasaporte</html>");
+		lblseleccionarLaVigencia.setBounds(43, 193, 299, 48);
+		lblseleccionarLaVigencia.setFont(new Font("Arial", Font.PLAIN, 20));
+		add(lblseleccionarLaVigencia);
+		
+		JLabel lbldesconoceLosPrecios = new JLabel("\u00BFDesconoce los precios?");
+		lbldesconoceLosPrecios.setBounds(762, 319, 228, 48);
+		lbldesconoceLosPrecios.setFont(new Font("Arial", Font.PLAIN, 20));
+		add(lbldesconoceLosPrecios);
 	}
+
+	
 
 }

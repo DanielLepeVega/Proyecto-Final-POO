@@ -77,32 +77,15 @@ public class PanelInfo extends JPanel {
 	private JTextField tfDia;
 	private JRadioButton rdFemenino, rdMasculino; 
 	private ButtonGroup bg;
-	/**
-	 * Launch the application.
-	 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PanelInfo window = new PanelInfo();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
+	
+	private Boolean siguiente = false;
+	
 	public PanelInfo(Pasaporte vPass) {
 		super();
 		this.vPass = vPass;
 		setBackground(Color.WHITE);
 		
 		this.setPreferredSize(new Dimension(1000,600));
-		this.logo = new ImageIcon("logo.png").getImage();
 		Label1 = new JLabel();
 		Label1.setFont(new Font("Tahoma", Font.BOLD, 28));
 		Label1.setText("DATOS PERSONALES");
@@ -123,7 +106,7 @@ public class PanelInfo extends JPanel {
 		Label6.setFont(new Font("Arial", Font.BOLD, 20));
 		Label6.setText("Lugar de Nacimiento");
 		Label7 = new JLabel();
-		Label7.setIcon(new ImageIcon("ff.png"));
+		Label7.setIcon(new ImageIcon("img//ff.png"));
 		Label8 = new JLabel();
 		Label8.setText("Autoridadsita");
 		Label8.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 20));
@@ -176,7 +159,9 @@ public class PanelInfo extends JPanel {
 		btNext = new JButton();
 		btNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//Insertar();
+				
+				guardarInfo();
+				siguiente = true;
 				vPass.cl.next(vPass.panelCont);	
 			}
 		});
@@ -191,6 +176,12 @@ public class PanelInfo extends JPanel {
 		btSalir.setFont(new Font("Arial", Font.PLAIN, 20));
 		btSalir.setText("Salir");
 		CurrentLayOut = new SpringLayout();
+		CurrentLayOut.putConstraint(SpringLayout.SOUTH, btSalir, -10, SpringLayout.SOUTH, this);
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, btAtras, 0, SpringLayout.NORTH, Label8);
+		CurrentLayOut.putConstraint(SpringLayout.EAST, btAtras, -6, SpringLayout.WEST, btNext);
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, btNext, 0, SpringLayout.NORTH, Label8);
+		CurrentLayOut.putConstraint(SpringLayout.EAST, btNext, -6, SpringLayout.WEST, btSalir);
+		CurrentLayOut.putConstraint(SpringLayout.EAST, btSalir, -24, SpringLayout.EAST, this);
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label4, 0, SpringLayout.NORTH, Label10);
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfNacionalidad, 1, SpringLayout.NORTH, tfCiudad);
 		CurrentLayOut.putConstraint(SpringLayout.WEST, tfNacionalidad, 60, SpringLayout.EAST, tfEstado);
@@ -240,20 +231,12 @@ public class PanelInfo extends JPanel {
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfCiudad, 16, SpringLayout.SOUTH, Label10);
 		CurrentLayOut.putConstraint(SpringLayout.SOUTH, tfCiudad, -17, SpringLayout.NORTH, Label9);
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label10, 15, SpringLayout.SOUTH, Label6);
-		CurrentLayOut.putConstraint(SpringLayout.SOUTH, btNext, -10, SpringLayout.SOUTH, this);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, btAtras, 0, SpringLayout.NORTH, btNext);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, btAtras, -27, SpringLayout.WEST, btNext);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, btNext, -28, SpringLayout.WEST, btSalir);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, btSalir, 870, SpringLayout.WEST, this);
-		CurrentLayOut.putConstraint(SpringLayout.SOUTH, btSalir, -10, SpringLayout.SOUTH, this);
 		CurrentLayOut.putConstraint(SpringLayout.SOUTH, Label8, -19, SpringLayout.SOUTH, this);
 		CurrentLayOut.putConstraint(SpringLayout.SOUTH, Label6, -105, SpringLayout.NORTH, Label9);
 		CurrentLayOut.putConstraint(SpringLayout.WEST, Label9, 36, SpringLayout.WEST, this);
 		CurrentLayOut.putConstraint(SpringLayout.SOUTH, Label9, -77, SpringLayout.SOUTH, this);
 		
-		initialize();
 		setUpPanel();
-		repaint();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -293,6 +276,7 @@ public class PanelInfo extends JPanel {
 		CurrentLayOut.putConstraint(SpringLayout.WEST, cbMes, 147, SpringLayout.WEST, this);
 		CurrentLayOut.putConstraint(SpringLayout.EAST, cbMes, -703, SpringLayout.EAST, this);
 		cbMes.setModel(new DefaultComboBoxModel(new String[] {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Septiembre", "Octubre", "Noviembre", "Diciembre", "Septiembre", "Octubre", "Noviembre", "Diciembre"}));
+		cbMes.setSelectedIndex(1);
 		CurrentLayOut.putConstraint(SpringLayout.WEST, Label13, 0, SpringLayout.WEST, cbMes);
 		CurrentLayOut.putConstraint(SpringLayout.WEST, tfAno, 31, SpringLayout.EAST, cbMes);
 		cbMes.setMaximumRowCount(12);
@@ -327,22 +311,43 @@ public class PanelInfo extends JPanel {
 		add(tfDia);
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.X_AXIS));
-	}
-
-	public void paintComponent (Graphics g) {
-		super.paintComponent(g);
-		//g.drawImage(this.logo,0,0,this.getWidth(),this.getHeight(),this);
+	public void guardarInfo() {
+		Integer[] meses = {1,2,3,4,5,6,7,8,9,10,11,12};
+		String fecha,mes,sexo;
+		sexo = "M";
+		if (siguiente == false) {
+			for(int i=2; i <10; i++) {
+				System.out.println(i);
+				vPass.DatosNecesarios.add("");
+			}
+		}
+	
+		mes =  meses[cbMes.getSelectedIndex()].toString();
+		//vPass.DatosNecesarios.add(mes);
+		fecha = (tfAno.getText() + "-" + mes +"-" + tfDia.getText());
+		
+		
+		if(rdMasculino.isSelected()) {
+			sexo = "M";
+		}else if(rdFemenino.isSelected()){
+			sexo = "F";
+		}
+		
+		vPass.DatosNecesarios.set(2,tfNombre.getText());
+		vPass.DatosNecesarios.set(3,tfApeP.getText());
+		vPass.DatosNecesarios.set(4,tfApeM.getText());
+		vPass.DatosNecesarios.set(5,tfCiudad.getText());
+		vPass.DatosNecesarios.set(6,tfEstado.getText());
+		vPass.DatosNecesarios.set(7,tfNacionalidad.getText());
+		vPass.DatosNecesarios.set(8,fecha);
+		vPass.DatosNecesarios.set(9,sexo);
+		
+		for(String n:vPass.DatosNecesarios) {
+			System.out.print(n +", ");
+		}
+		
 		
 	}
-	
-	
 	public void Insertar() {
 		Integer[] meses = {1,2,3,4,5,6,7,8,9,10,11,12};
 		Connection conexion = null;

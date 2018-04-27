@@ -1,6 +1,9 @@
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 public class Pasaporte extends JFrame{
@@ -12,27 +15,26 @@ public class Pasaporte extends JFrame{
 	private PanelNacionalidad pNacio;
 	private PanelIdentidad pIde;
 	private PanelCorreo pMail;
-	protected String[] DatosNecesarios;
+	protected ArrayList<String> DatosNecesarios;
 	public Pasaporte () {
 		super("VENTANA PRINCIPAL");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(1000, 600);
-		
+		this.setPreferredSize(new Dimension(1000, 600));
+		DatosNecesarios = new ArrayList<String>();
 		pInfo = new PanelInfo(this);
 		pMenu = new PanelMenu(this);
-		pNacio = new PanelNacionalidad(this);
 		pIde = new PanelIdentidad(this);
 		pMail = new PanelCorreo(this);
+		pNacio = new PanelNacionalidad(this,pMail);
 		panelCont.setLayout(cl);
 		panelCont.add(pMenu,"1");
 		panelCont.add(pInfo,"2");
 		panelCont.add(pNacio,"3");
-		panelCont.add(pIde,"4");
-		panelCont.add(pMail,"5");
+		panelCont.add(pMail,"4");
 		
 		cl.show(panelCont, "1");
 		
-		this.add(panelCont);
+		getContentPane().add(panelCont);
 		this.setResizable(false);
 		this.pack();
 		this.setLocationRelativeTo(null);
