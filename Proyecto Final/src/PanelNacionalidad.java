@@ -46,6 +46,7 @@ public class PanelNacionalidad extends JPanel{
 	private JLabel lblNewLabel_1;
 	private Pasaporte vPass;
 	private PanelCorreo pCorreo;
+	private boolean siguiente;
 	public PanelNacionalidad(Pasaporte vPass, PanelCorreo pCorreo) {
 		super();
 		this.pCorreo = pCorreo;
@@ -155,6 +156,7 @@ public class PanelNacionalidad extends JPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				guardarDatos();
 				pCorreo.llenarInfo();
+				siguiente = true;
 				vPass.cl.next(vPass.panelCont);
 			}
 		});
@@ -250,11 +252,16 @@ public class PanelNacionalidad extends JPanel{
 	}
 
 	protected void guardarDatos() {
-		vPass.DatosNecesarios.add(tfCurp.getText());
-		vPass.DatosNecesarios.add(tfActa.getText());
+		
+		if (siguiente == false) {
+			for(int i=10; i <12; i++) {
+				vPass.DatosNecesarios.add("");
+			}
+		}
+		vPass.DatosNecesarios.set(10,tfCurp.getText());
+		vPass.DatosNecesarios.set(11,tfActa.getText());
 		int es = 0;
 		for(String n:vPass.DatosNecesarios) {
-		
 			System.out.print((es)+ " "+ n +", ");
 			es+=1;
 		}

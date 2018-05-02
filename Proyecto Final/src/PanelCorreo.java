@@ -13,6 +13,11 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
@@ -30,15 +35,13 @@ public class PanelCorreo extends JPanel{
 	private JLabel lblFecha;
 	private JLabel lblSexo;
 	private JLabel lblNacimiento;
+	private boolean siguiente;
 	public PanelCorreo(Pasaporte vPass) {
 		super();
 		this.vPass = vPass;
 		setBorder(new CompoundBorder());
-		setBackground(Color.WHITE);
-		
-		this.setPreferredSize(new Dimension(1000,600));
-		
-		
+		setBackground(Color.WHITE);		
+		this.setPreferredSize(new Dimension(1000,600));		
 		setUpPanel();
 	}
 	
@@ -243,6 +246,13 @@ public class PanelCorreo extends JPanel{
 					if(validate(tfCorreo.getText())) {
 						if(tfCorreo.getText().equals(tfConfirma.getText())){
 							System.out.println("Correos iguales");
+							int dialogResult = JOptionPane.showConfirmDialog (null, "¿Esta seguro de enviar la información?","Warning",JOptionPane.YES_NO_OPTION);
+							if(dialogResult == JOptionPane.YES_OPTION){
+								guardarInfo();
+								siguiente = true;
+								Insertar();
+							}
+							
 						}else {
 							JOptionPane.showMessageDialog(null, "Los correos no coinciden.");
 						}
@@ -278,13 +288,23 @@ public class PanelCorreo extends JPanel{
 	}
 
 
+	//COMIENZA CÓDIGO OBTENIDO
+	/*
+	 * Código obtenido de
+	 * https://stackoverflow.com/questions/8204680/java-regex-email
+	 * 
+	 * Autor:
+	 * Jason Buberel
+	 */
 	public static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
-		    Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+			Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
-		public static boolean validate(String emailStr) {
-		        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
-		        return matcher.find();
-		}
+	public static boolean validate(String emailStr) {
+		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
+		return matcher.find();
+	}
+	
+	//FIN DE CÓDIGO OBTENIDO
 	public void llenarInfo() {
 		// TODO Auto-generated method stub
 		this.lblNombre.setText((vPass.DatosNecesarios.get(2)) + " " + (vPass.DatosNecesarios.get(3)) + " " + (vPass.DatosNecesarios.get(4)));
@@ -298,5 +318,68 @@ public class PanelCorreo extends JPanel{
 		}
 	}
 
+	public void guardarInfo() {
+
+		if(siguiente == false) {
+			vPass.DatosNecesarios.add("");
+		}
+		vPass.DatosNecesarios.set(12,tfCorreo.getText());
+	}
+
+	public void Insertar() {
+		Integer[] meses = {1,2,3,4,5,6,7,8,9,10,11,12};
+		Connection conexion = null;
+		java.sql.PreparedStatement stmt = null;
+		java.util.Date nacimiento;
+		try {
+			conexion = DBUtil.getConnection(DBType.MYSQL);
+			String nombre, apep,apem,ciudad,estado,nacionalidad,fecha,sexo,precio,vigencia,curp,acta,correo;
+			precio = vPass.DatosNecesarios.get(0);
+			vigencia = vPass.DatosNecesarios.get(1);
+			nombre = vPass.DatosNecesarios.get(2);
+			apep = vPass.DatosNecesarios.get(3);
+			apem = vPass.DatosNecesarios.get(4);
+			ciudad = vPass.DatosNecesarios.get(5);
+			estado = vPass.DatosNecesarios.get(6);
+			nacionalidad = vPass.DatosNecesarios.get(7);
+			fecha = vPass.DatosNecesarios.get(8);
+			sexo = vPass.DatosNecesarios.get(9);
+			curp = vPass.DatosNecesarios.get(10);
+			acta = vPass.DatosNecesarios.get(11);
+			correo = vPass.DatosNecesarios.get(12);
+			
+			nacimiento = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
+			Date sqlFecha = new Date(nacimiento.getTime());
+
+			System.out.println(sqlFecha);
+			stmt = conexion.prepareStatement("INSERT INTO inf " + " VALUES (NULL,'"+nombre+"','"+apep+"','"+apem +"', ?,'"+sexo+"','"+estado+"','"+ciudad+"','"+nacionalidad+"','"+curp+"','"+acta+"','"+vigencia+"','"+precio+"','"+correo+"','0')");
+			stmt.setDate(1, sqlFecha);
+			stmt.execute();
+			JOptionPane.showMessageDialog(null, "Información enviada con éxitco.");
+		} catch (SQLException e) {
+			DBUtil.processException(e);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if (conexion != null) {
+				try {
+					conexion.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 }
 

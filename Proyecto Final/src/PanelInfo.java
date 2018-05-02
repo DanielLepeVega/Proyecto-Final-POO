@@ -319,7 +319,6 @@ public class PanelInfo extends JPanel {
 		sexo = "M";
 		if (siguiente == false) {
 			for(int i=2; i <10; i++) {
-				System.out.println(i);
 				vPass.DatosNecesarios.add("");
 			}
 		}
