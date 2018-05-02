@@ -39,6 +39,8 @@ import java.awt.Color;
 import java.awt.SystemColor;
 import javax.swing.JRadioButton;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class PanelInfo extends JPanel {
 
@@ -52,8 +54,6 @@ public class PanelInfo extends JPanel {
 					lblFecha,
 					Label6,
 					Label7,
-					Label8,
-					Label9,
 					Label10,
 					Label11,
 					Label12,
@@ -74,11 +74,11 @@ public class PanelInfo extends JPanel {
 	private JComboBox cbMes;
 
 	private Pasaporte vPass;
-	private JTextField tfDia;
 	private JRadioButton rdFemenino, rdMasculino; 
 	private ButtonGroup bg;
 	
 	private Boolean siguiente = false;
+	private JComboBox cbDias;
 	
 	public PanelInfo(Pasaporte vPass) {
 		super();
@@ -107,12 +107,6 @@ public class PanelInfo extends JPanel {
 		Label6.setText("Lugar de Nacimiento");
 		Label7 = new JLabel();
 		Label7.setIcon(new ImageIcon("img//ff.png"));
-		Label8 = new JLabel();
-		Label8.setText("Autoridadsita");
-		Label8.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 20));
-		Label9 = new JLabel();
-		Label9.setFont(new Font("Arial", Font.BOLD, 20));
-		Label9.setText("Autoridad");
 		Label10 = new JLabel();
 		Label10.setFont(new Font("Arial", Font.BOLD, 20));
 		Label10.setText("Ciudad");
@@ -176,25 +170,42 @@ public class PanelInfo extends JPanel {
 		btSalir.setFont(new Font("Arial", Font.PLAIN, 20));
 		btSalir.setText("Salir");
 		CurrentLayOut = new SpringLayout();
+		CurrentLayOut.putConstraint(SpringLayout.SOUTH, tfNacionalidad, 0, SpringLayout.SOUTH, tfCiudad);
+		CurrentLayOut.putConstraint(SpringLayout.WEST, tfCiudad, 36, SpringLayout.WEST, this);
+		CurrentLayOut.putConstraint(SpringLayout.EAST, tfCiudad, -50, SpringLayout.WEST, tfEstado);
+		CurrentLayOut.putConstraint(SpringLayout.SOUTH, tfEstado, 40, SpringLayout.SOUTH, Label11);
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfNacionalidad, 6, SpringLayout.SOUTH, Label4);
+		CurrentLayOut.putConstraint(SpringLayout.WEST, tfNacionalidad, 0, SpringLayout.WEST, Label4);
+		CurrentLayOut.putConstraint(SpringLayout.EAST, tfNacionalidad, -196, SpringLayout.EAST, this);
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfEstado, 6, SpringLayout.SOUTH, Label11);
+		CurrentLayOut.putConstraint(SpringLayout.WEST, tfEstado, 0, SpringLayout.WEST, Label11);
+		CurrentLayOut.putConstraint(SpringLayout.EAST, tfEstado, 0, SpringLayout.EAST, tfNombre);
+		CurrentLayOut.putConstraint(SpringLayout.SOUTH, tfCiudad, 39, SpringLayout.SOUTH, Label10);
+		CurrentLayOut.putConstraint(SpringLayout.EAST, tfNombre, -469, SpringLayout.EAST, this);
+		CurrentLayOut.putConstraint(SpringLayout.WEST, tfNombre, 36, SpringLayout.WEST, this);
+		CurrentLayOut.putConstraint(SpringLayout.EAST, lblFecha, -433, SpringLayout.WEST, Label16);
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfCiudad, 6, SpringLayout.SOUTH, Label10);
+		CurrentLayOut.putConstraint(SpringLayout.SOUTH, lblFecha, -6, SpringLayout.NORTH, Label12);
+		CurrentLayOut.putConstraint(SpringLayout.EAST, Label12, -57, SpringLayout.WEST, Label14);
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label12, 275, SpringLayout.NORTH, this);
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label13, 0, SpringLayout.NORTH, Label12);
+		CurrentLayOut.putConstraint(SpringLayout.WEST, Label13, 0, SpringLayout.WEST, Label2);
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfAno, 6, SpringLayout.SOUTH, Label14);
+		CurrentLayOut.putConstraint(SpringLayout.WEST, Label3, 36, SpringLayout.WEST, this);
+		CurrentLayOut.putConstraint(SpringLayout.WEST, Label6, 0, SpringLayout.WEST, Label2);
+		CurrentLayOut.putConstraint(SpringLayout.SOUTH, Label6, -6, SpringLayout.NORTH, Label10);
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label10, 410, SpringLayout.NORTH, this);
+		CurrentLayOut.putConstraint(SpringLayout.SOUTH, btNext, -10, SpringLayout.SOUTH, this);
+		CurrentLayOut.putConstraint(SpringLayout.SOUTH, btAtras, -10, SpringLayout.SOUTH, this);
+		CurrentLayOut.putConstraint(SpringLayout.WEST, tfAno, 0, SpringLayout.WEST, Label11);
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label14, 0, SpringLayout.NORTH, Label12);
+		CurrentLayOut.putConstraint(SpringLayout.WEST, Label14, 0, SpringLayout.WEST, Label11);
 		CurrentLayOut.putConstraint(SpringLayout.SOUTH, btSalir, -10, SpringLayout.SOUTH, this);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, btAtras, 0, SpringLayout.NORTH, Label8);
 		CurrentLayOut.putConstraint(SpringLayout.EAST, btAtras, -6, SpringLayout.WEST, btNext);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, btNext, 0, SpringLayout.NORTH, Label8);
 		CurrentLayOut.putConstraint(SpringLayout.EAST, btNext, -6, SpringLayout.WEST, btSalir);
 		CurrentLayOut.putConstraint(SpringLayout.EAST, btSalir, -24, SpringLayout.EAST, this);
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label4, 0, SpringLayout.NORTH, Label10);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfNacionalidad, 1, SpringLayout.NORTH, tfCiudad);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, tfNacionalidad, 60, SpringLayout.EAST, tfEstado);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, tfNacionalidad, -196, SpringLayout.EAST, this);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label12, 275, SpringLayout.NORTH, this);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfAno, 2, SpringLayout.SOUTH, Label14);
-		CurrentLayOut.putConstraint(SpringLayout.SOUTH, lblFecha, -11, SpringLayout.NORTH, Label12);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, lblFecha, 0, SpringLayout.EAST, Label6);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label14, 0, SpringLayout.NORTH, Label12);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, Label14, 0, SpringLayout.WEST, Label1);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label13, 0, SpringLayout.NORTH, Label12);
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label16, 257, SpringLayout.NORTH, this);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, Label12, 37, SpringLayout.WEST, this);
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label1, 10, SpringLayout.NORTH, this);
 		CurrentLayOut.putConstraint(SpringLayout.WEST, Label1, 331, SpringLayout.WEST, this);
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label7, 70, SpringLayout.NORTH, this);
@@ -209,32 +220,14 @@ public class PanelInfo extends JPanel {
 		CurrentLayOut.putConstraint(SpringLayout.WEST, Label15, 114, SpringLayout.EAST, Label2);
 		CurrentLayOut.putConstraint(SpringLayout.SOUTH, Label3, -8, SpringLayout.NORTH, tfNombre);
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label2, 16, SpringLayout.SOUTH, tfNombre);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, tfNombre, 0, SpringLayout.EAST, tfEstado);
 		CurrentLayOut.putConstraint(SpringLayout.EAST, Label16, -280, SpringLayout.EAST, this);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, tfAno, -488, SpringLayout.EAST, this);
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfNombre, 99, SpringLayout.NORTH, this);
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfApeP, 6, SpringLayout.SOUTH, Label2);
 		CurrentLayOut.putConstraint(SpringLayout.WEST, tfApeP, 36, SpringLayout.WEST, this);
 		CurrentLayOut.putConstraint(SpringLayout.WEST, Label2, 0, SpringLayout.WEST, Label3);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, tfNombre, 0, SpringLayout.WEST, Label3);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, Label3, 0, SpringLayout.WEST, Label6);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, tfCiudad, 36, SpringLayout.WEST, this);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, tfCiudad, -50, SpringLayout.WEST, tfEstado);
 		CurrentLayOut.putConstraint(SpringLayout.WEST, Label10, 36, SpringLayout.WEST, this);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, Label8, 36, SpringLayout.WEST, this);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, Label6, 36, SpringLayout.WEST, this);
 		CurrentLayOut.putConstraint(SpringLayout.EAST, Label11, -645, SpringLayout.EAST, this);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfEstado, 1, SpringLayout.NORTH, tfCiudad);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, tfEstado, 0, SpringLayout.WEST, Label11);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, tfEstado, -469, SpringLayout.EAST, this);
 		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label11, 0, SpringLayout.NORTH, Label10);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfCiudad, 16, SpringLayout.SOUTH, Label10);
-		CurrentLayOut.putConstraint(SpringLayout.SOUTH, tfCiudad, -17, SpringLayout.NORTH, Label9);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label10, 15, SpringLayout.SOUTH, Label6);
-		CurrentLayOut.putConstraint(SpringLayout.SOUTH, Label8, -19, SpringLayout.SOUTH, this);
-		CurrentLayOut.putConstraint(SpringLayout.SOUTH, Label6, -105, SpringLayout.NORTH, Label9);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, Label9, 36, SpringLayout.WEST, this);
-		CurrentLayOut.putConstraint(SpringLayout.SOUTH, Label9, -77, SpringLayout.SOUTH, this);
 		
 		setUpPanel();
 	}
@@ -250,8 +243,6 @@ public class PanelInfo extends JPanel {
 		this.add(lblFecha);
 		this.add(Label6);
 		this.add(Label7);
-		this.add(Label8);
-		this.add(Label9);
 		this.add(Label10);
 		this.add(Label11);
 		this.add(Label12);
@@ -272,30 +263,36 @@ public class PanelInfo extends JPanel {
 		
 		
 		cbMes = new JComboBox();
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, cbMes, 2, SpringLayout.SOUTH, Label13);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, cbMes, 147, SpringLayout.WEST, this);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, cbMes, -703, SpringLayout.EAST, this);
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, cbMes, 0, SpringLayout.NORTH, tfAno);
+		CurrentLayOut.putConstraint(SpringLayout.WEST, cbMes, 0, SpringLayout.WEST, Label2);
+		cbMes.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if(arg0.getStateChange() == ItemEvent.SELECTED) {
+					if(cbMes.getSelectedIndex() >-1 ) {
+					cbDias.setModel(new DefaultComboBoxModel(getDias(cbMes.getSelectedItem().toString())));
+					}
+				}
+			}
+		});
 		cbMes.setModel(new DefaultComboBoxModel(new String[] {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Septiembre", "Octubre", "Noviembre", "Diciembre", "Septiembre", "Octubre", "Noviembre", "Diciembre"}));
-		cbMes.setSelectedIndex(1);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, Label13, 0, SpringLayout.WEST, cbMes);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, tfAno, 31, SpringLayout.EAST, cbMes);
 		cbMes.setMaximumRowCount(12);
 		cbMes.setToolTipText("");
 		cbMes.setFont(new Font("Arial", Font.PLAIN, 20));
 		add(cbMes);
 		
 		rdMasculino = new JRadioButton("M");
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, rdMasculino, 19, SpringLayout.SOUTH, Label16);
+		CurrentLayOut.putConstraint(SpringLayout.EAST, tfAno, -199, SpringLayout.WEST, rdMasculino);
 		CurrentLayOut.putConstraint(SpringLayout.EAST, Label4, 0, SpringLayout.EAST, rdMasculino);
 		rdMasculino.setSelected(true);
 		rdMasculino.setBackground(Color.WHITE);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, rdMasculino, -1, SpringLayout.NORTH, tfAno);
 		CurrentLayOut.putConstraint(SpringLayout.WEST, rdMasculino, 0, SpringLayout.WEST, Label16);
 		rdMasculino.setFont(new Font("Arial", Font.PLAIN, 20));
 		add(rdMasculino);
 		
 		rdFemenino = new JRadioButton("F");
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, rdFemenino, 106, SpringLayout.SOUTH, Label7);
 		rdFemenino.setBackground(Color.WHITE);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, rdFemenino, -1, SpringLayout.NORTH, tfAno);
 		CurrentLayOut.putConstraint(SpringLayout.WEST, rdFemenino, 20, SpringLayout.EAST, rdMasculino);
 		rdFemenino.setFont(new Font("Arial", Font.PLAIN, 20));
 		add(rdFemenino);
@@ -303,17 +300,22 @@ public class PanelInfo extends JPanel {
 		bg.add(rdMasculino);
 		bg.add(rdFemenino);
 		
-		tfDia = new JTextField();
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfDia, 0, SpringLayout.NORTH, tfAno);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, tfDia, 0, SpringLayout.WEST, Label2);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, tfDia, 0, SpringLayout.EAST, Label10);
-		tfDia.setFont(new Font("Arial", Font.PLAIN, 20));
-		add(tfDia);
+		cbDias = new JComboBox();
+		CurrentLayOut.putConstraint(SpringLayout.EAST, cbMes, -15, SpringLayout.WEST, cbDias);
+		CurrentLayOut.putConstraint(SpringLayout.NORTH, cbDias, 6, SpringLayout.SOUTH, Label12);
+		CurrentLayOut.putConstraint(SpringLayout.WEST, cbDias, 0, SpringLayout.WEST, Label12);
+		CurrentLayOut.putConstraint(SpringLayout.EAST, cbDias, 53, SpringLayout.WEST, Label12);
+		cbDias.setToolTipText("");
+		cbDias.setMaximumRowCount(33);
+		cbDias.setFont(new Font("Arial", Font.PLAIN, 20));
+		cbDias.setModel(new DefaultComboBoxModel(getDias(cbMes.getSelectedItem().toString())));
+		
+		add(cbDias);
 	}
 
 	public void guardarInfo() {
 		Integer[] meses = {1,2,3,4,5,6,7,8,9,10,11,12};
-		String fecha,mes,sexo;
+		String fecha,mes,sexo,dia;
 		sexo = "M";
 		if (siguiente == false) {
 			for(int i=2; i <10; i++) {
@@ -322,9 +324,10 @@ public class PanelInfo extends JPanel {
 			}
 		}
 	
-		mes =  meses[cbMes.getSelectedIndex()].toString();
+		mes = meses[cbMes.getSelectedIndex()].toString();
+		dia = cbDias.getSelectedItem().toString();
 		//vPass.DatosNecesarios.add(mes);
-		fecha = (tfAno.getText() + "-" + mes +"-" + tfDia.getText());
+		fecha = (tfAno.getText() + "-" + mes +"-" + dia);
 		
 		
 		if(rdMasculino.isSelected()) {
@@ -342,12 +345,39 @@ public class PanelInfo extends JPanel {
 		vPass.DatosNecesarios.set(8,fecha);
 		vPass.DatosNecesarios.set(9,sexo);
 		
+		int es = 0;
 		for(String n:vPass.DatosNecesarios) {
-			System.out.print(n +", ");
+		
+			System.out.print((es)+ " "+ n +", ");
+			es+=1;
 		}
+		System.out.println();
 		
 		
 	}
+	
+	public String[] getDias(String mes) {
+		String[] dias = null;
+		if(mes.equals("Febrero")) {
+			dias = new String[29];
+			for(int n = 0; n < 29; n++) {
+				dias[n] = Integer.toString(n+1);
+			}
+		}else if(mes.equals("Abril") || mes.equals("Junio") || mes.equals("Septiembre") || mes.equals("Noviembre")) {
+			dias = new String[30];
+			for(int n = 0; n < 30; n++) {
+				dias[n] = Integer.toString(n+1);
+			}
+		}else {
+			dias = new String[31];
+			for(int n = 0; n < 31; n++) {
+				dias[n] = Integer.toString(n+1);
+			}
+		}
+		
+		return dias;
+	}
+	
 	public void Insertar() {
 		Integer[] meses = {1,2,3,4,5,6,7,8,9,10,11,12};
 		Connection conexion = null;
@@ -356,7 +386,7 @@ public class PanelInfo extends JPanel {
 		try {
 			conexion = DBUtil.getConnection(DBType.MYSQL);
 			
-			String nombre, apep,apem,ciudad,estado,nacionalidad,fecha,mes,sexo;
+			String nombre, apep,apem,ciudad,estado,nacionalidad,fecha,mes,sexo,dia;
 			sexo = "M";
 			nombre = tfNombre.getText();
 			apep = tfApeP.getText();
@@ -365,7 +395,8 @@ public class PanelInfo extends JPanel {
 			estado = tfEstado.getText();
 			nacionalidad = tfNacionalidad.getText();
 			mes = meses[cbMes.getSelectedIndex()-1].toString();
-			fecha = (tfAno.getText() + "-" + mes +"-" + tfDia.getText());
+			dia = cbDias.getSelectedItem().toString();
+			fecha = (tfAno.getText() + "-" + mes +"-" + dia);
 			nacimiento = new SimpleDateFormat("yyyy-MM-dd").parse(fecha);
 			Date sqlFecha = new Date(nacimiento.getTime());
 			if(rdMasculino.isSelected()) {
@@ -402,5 +433,4 @@ public class PanelInfo extends JPanel {
 			}
 		}
 	}
-	
 }
