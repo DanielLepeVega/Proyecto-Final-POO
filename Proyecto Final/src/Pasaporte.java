@@ -15,7 +15,6 @@ public class Pasaporte extends JFrame{
 	private PanelInfo pInfo;
 	private PanelMenu pMenu;
 	private PanelNacionalidad pNacio;
-	private PanelIdentidad pIde;
 	private PanelCorreo pMail;
 	protected ArrayList<String> DatosNecesarios;
 	public Pasaporte () {
@@ -25,7 +24,6 @@ public class Pasaporte extends JFrame{
 		DatosNecesarios = new ArrayList<String>();
 		pInfo = new PanelInfo(this);
 		pMenu = new PanelMenu(this);
-		pIde = new PanelIdentidad(this);
 		pMail = new PanelCorreo(this);
 		pNacio = new PanelNacionalidad(this,pMail);
 		panelCont.setLayout(cl);
