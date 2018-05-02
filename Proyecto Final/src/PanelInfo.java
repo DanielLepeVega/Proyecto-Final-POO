@@ -544,7 +544,6 @@ public class PanelInfo extends JPanel {
 		advertencias = new JLabel[]{lblAdvertenciaNombre,lblAdvertenciaApep,lblAdvertenciaApem,lblAdvertenciaAno,lblAdvertenciaCiudad,lblAdvertenciaEstado};
 		for(int i=0; i< advertencias.length ; i++) {
 			advertencias[i].setText("");
-			System.out.println(advertencias[i].getText());
 		}
 	}
 

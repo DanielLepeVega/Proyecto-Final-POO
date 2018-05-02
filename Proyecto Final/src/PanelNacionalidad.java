@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
@@ -26,6 +27,8 @@ import java.awt.SystemColor;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class PanelNacionalidad extends JPanel{
 	private JFrame frame;
@@ -33,8 +36,6 @@ public class PanelNacionalidad extends JPanel{
 	private JLabel Label1,
 					Label2,
 					Label3,
-					Label4,
-					lbEstado,
 					Label6;
 	private JButton btCurp,
 					btActa,
@@ -47,6 +48,7 @@ public class PanelNacionalidad extends JPanel{
 	private Pasaporte vPass;
 	private PanelCorreo pCorreo;
 	private boolean siguiente;
+	private JLabel lblAdvertenciaCurp;
 	public PanelNacionalidad(Pasaporte vPass, PanelCorreo pCorreo) {
 		super();
 		this.pCorreo = pCorreo;
@@ -74,7 +76,7 @@ public class PanelNacionalidad extends JPanel{
 		GridBagConstraints gbc_Label6 = new GridBagConstraints();
 		gbc_Label6.fill = GridBagConstraints.BOTH;
 		gbc_Label6.insets = new Insets(0, 0, 5, 0);
-		gbc_Label6.gridheight = 4;
+		gbc_Label6.gridheight = 3;
 		gbc_Label6.gridwidth = 3;
 		gbc_Label6.gridx = 4;
 		gbc_Label6.gridy = 0;
@@ -89,6 +91,16 @@ public class PanelNacionalidad extends JPanel{
 		gbc_Label2.gridy = 2;
 		this.add(Label2, gbc_Label2);
 		tfCurp = new JTextField();
+		tfCurp.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				if(tfCurp.getText().length() == 18) {
+					lblAdvertenciaCurp.setText("");
+				}else {
+					lblAdvertenciaCurp.setText("Ingrese los 18 carácteres de la CURP");
+				}
+			}
+		});
 		tfCurp.setFont(new Font("Arial", Font.PLAIN, 20));
 		GridBagConstraints gbc_tfCurp = new GridBagConstraints();
 		gbc_tfCurp.anchor = GridBagConstraints.NORTH;
@@ -98,11 +110,58 @@ public class PanelNacionalidad extends JPanel{
 		gbc_tfCurp.gridx = 1;
 		gbc_tfCurp.gridy = 3;
 		this.add(tfCurp, gbc_tfCurp);
+		btNext = new JButton();
+		btNext.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(Revisar()) {
+					guardarDatos();
+					pCorreo.llenarInfo();
+					siguiente = true;
+					vPass.cl.next(vPass.panelCont);
+				}else {
+					JOptionPane.showMessageDialog(null, "Revise su información","Error",JOptionPane.WARNING_MESSAGE);
+				}
+				
+			}
+		});
+		btAtras = new JButton();
+		btAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				vPass.cl.previous(vPass.panelCont);
+			}
+		});
+		btActa = new JButton();
+		btActa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (Desktop.isDesktopSupported()) {
+				    try {
+						Desktop.getDesktop().browse(new URI("https://www.gob.mx/ActaNacimiento/"));
+					} catch (IOException e) {
+						e.printStackTrace();
+					} catch (URISyntaxException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		
+		lblAdvertenciaCurp = new JLabel("Advertencia CURP");
+		lblAdvertenciaCurp.setForeground(new Color(255, 0, 0));
+		lblAdvertenciaCurp.setFont(new Font("Arial", Font.BOLD, 17));
+		GridBagConstraints gbc_lblAdvertenciaCurp = new GridBagConstraints();
+		gbc_lblAdvertenciaCurp.gridwidth = 2;
+		gbc_lblAdvertenciaCurp.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblAdvertenciaCurp.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAdvertenciaCurp.gridx = 3;
+		gbc_lblAdvertenciaCurp.gridy = 3;
+		add(lblAdvertenciaCurp, gbc_lblAdvertenciaCurp);
+		lblAdvertenciaCurp.setText("");
 		
 		JLabel lblNewLabel = new JLabel("<html>Si no con\u00F3ces tu CURP, puedes presionar\r<br/>el siguiente bot\u00F3n para consultarlo</htm>");
 		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 16));
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.anchor = GridBagConstraints.NORTHWEST;
+		gbc_lblNewLabel.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblNewLabel.anchor = GridBagConstraints.NORTH;
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel.gridwidth = 2;
 		gbc_lblNewLabel.gridx = 1;
@@ -131,55 +190,6 @@ public class PanelNacionalidad extends JPanel{
 		gbc_btCurp.gridx = 1;
 		gbc_btCurp.gridy = 5;
 		this.add(btCurp, gbc_btCurp);
-		Label4 = new JLabel();
-		Label4.setFont(new Font("Arial", Font.BOLD, 26));
-		Label4.setText("ESTADO");
-		GridBagConstraints gbc_Label4 = new GridBagConstraints();
-		gbc_Label4.anchor = GridBagConstraints.NORTH;
-		gbc_Label4.insets = new Insets(0, 0, 5, 5);
-		gbc_Label4.gridwidth = 2;
-		gbc_Label4.gridx = 4;
-		gbc_Label4.gridy = 5;
-		this.add(Label4, gbc_Label4);
-		lbEstado = new JLabel();
-		lbEstado.setText("Estadito");
-		lbEstado.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 20));
-		GridBagConstraints gbc_lbEstado = new GridBagConstraints();
-		gbc_lbEstado.anchor = GridBagConstraints.SOUTH;
-		gbc_lbEstado.insets = new Insets(0, 0, 5, 5);
-		gbc_lbEstado.gridwidth = 2;
-		gbc_lbEstado.gridx = 4;
-		gbc_lbEstado.gridy = 6;
-		this.add(lbEstado, gbc_lbEstado);
-		btNext = new JButton();
-		btNext.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				guardarDatos();
-				pCorreo.llenarInfo();
-				siguiente = true;
-				vPass.cl.next(vPass.panelCont);
-			}
-		});
-		btAtras = new JButton();
-		btAtras.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				vPass.cl.previous(vPass.panelCont);
-			}
-		});
-		btActa = new JButton();
-		btActa.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if (Desktop.isDesktopSupported()) {
-				    try {
-						Desktop.getDesktop().browse(new URI("https://www.gob.mx/ActaNacimiento/"));
-					} catch (IOException e) {
-						e.printStackTrace();
-					} catch (URISyntaxException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
 		Label3 = new JLabel();
 		Label3.setText("N\u00DAMERO DE ACTA DE NACIMIENTO\r\n");
 		Label3.setFont(new Font("Arial", Font.BOLD, 26));
@@ -203,7 +213,8 @@ public class PanelNacionalidad extends JPanel{
 		lblNewLabel_1 = new JLabel("<html>Si no con\u00F3ces tu n\u00FAmero de acta de nacimiento, puedes presionar\r<br/> el siguiente bot\u00F3n para consultarlo</html>");
 		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 16));
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.anchor = GridBagConstraints.NORTHWEST;
+		gbc_lblNewLabel_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblNewLabel_1.anchor = GridBagConstraints.NORTH;
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_1.gridwidth = 2;
 		gbc_lblNewLabel_1.gridx = 1;
@@ -249,6 +260,24 @@ public class PanelNacionalidad extends JPanel{
 		gbc_btSalir.gridx = 6;
 		gbc_btSalir.gridy = 13;
 		this.add(btSalir, gbc_btSalir);
+	}
+
+	protected boolean Revisar() {
+		boolean bien = false;
+		if(lblAdvertenciaCurp.getText().equals("")) {
+			bien = true;
+		}else {
+			return false;
+		}
+		if(tfCurp.getText().equals("")) {
+			bien = false;
+		}else if(tfActa.getText().equals("")) {
+			bien = false;
+		}else {
+			bien = true;
+		}
+		
+		return bien;
 	}
 
 	protected void guardarDatos() {
