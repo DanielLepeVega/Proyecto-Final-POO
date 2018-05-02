@@ -8,6 +8,15 @@ import java.util.Locale.IsoCountryCode;
 
 import javax.swing.*;
 
+/*
+ * Gustavo Alejandro Flores Cortés
+ * A01635151
+ * 
+ * Daniel Lepe Vega
+ * A01633986
+ * 
+ */
+
 public class Pasaporte extends JFrame{
 	
 	protected CardLayout cl = new CardLayout();
