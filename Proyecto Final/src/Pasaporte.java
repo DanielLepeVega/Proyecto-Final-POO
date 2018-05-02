@@ -46,23 +46,8 @@ public class Pasaporte extends JFrame{
 	
 	public static void main(String[] args) {
 		Pasaporte ventanaPasaporte = new Pasaporte(); 
-		String[] paises = Locale.getISOCountries();
-		String[] estados = {};
-		ventanaPasaporte.getAllCountries();
+		
 	}
 	
-	 public String[] getAllCountries() {
-		    String[] countries = new String[Locale.getISOCountries().length];
-		    String[] countryCodes = Locale.getISOCountries();
-		    for (int i = 0; i < countryCodes.length; i++) {
-		        Locale obj = new Locale("", countryCodes[i]);
-		        countries[i] = obj.getDisplayCountry();
-		    }
-		    
-		    for(String n:countries) {
-				System.out.println(n);
-					
-			}
-		    return countries;
-		 }
+	
 }

@@ -16,6 +16,7 @@ import com.mysql.jdbc.PreparedStatement;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -41,10 +42,13 @@ import javax.swing.JRadioButton;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 public class PanelInfo extends JPanel {
-
-	private SpringLayout CurrentLayOut;
 	private JFrame frame;
 	private Image logo;
 	private JLabel Label1,
@@ -79,192 +83,234 @@ public class PanelInfo extends JPanel {
 	
 	private Boolean siguiente = false;
 	private JComboBox cbDias;
-	
+	private JLabel lblAdvertenciaCiudad;
+	private JLabel lblAdvertenciaEstado;
+	private JLabel[] advertencias;
+	private JLabel lblAdvertenciaNombre;
+	private JLabel lblAdvertenciaApep;
+	private JLabel lblAdvertenciaAno;
+	private JLabel lblAdvertenciaApem;
 	public PanelInfo(Pasaporte vPass) {
 		super();
 		this.vPass = vPass;
 		setBackground(Color.WHITE);
 		
 		this.setPreferredSize(new Dimension(1000,600));
-		Label1 = new JLabel();
-		Label1.setFont(new Font("Tahoma", Font.BOLD, 28));
-		Label1.setText("DATOS PERSONALES");
-		Label2 = new JLabel();
-		Label2.setFont(new Font("Arial", Font.BOLD, 20));
-		Label2.setText("Apellido Paterno");
-		Label3 = new JLabel();
-		Label3.setText("Nombre(s)");
-		Label3.setFont(new Font("Arial", Font.BOLD, 20));
-		Label4 = new JLabel();
-		Label4.setFont(new Font("Arial", Font.BOLD, 20));
-		Label4.setText("Nacionalidad");
-		lblFecha = new JLabel();
-		lblFecha.setText("Fecha de Nacimiento:\r\n");
-		lblFecha.setToolTipText("");
-		lblFecha.setFont(new Font("Arial", Font.BOLD, 20));
-		Label6 = new JLabel();
-		Label6.setFont(new Font("Arial", Font.BOLD, 20));
-		Label6.setText("Lugar de Nacimiento");
-		Label7 = new JLabel();
-		Label7.setIcon(new ImageIcon("img//ff.png"));
-		Label10 = new JLabel();
-		Label10.setFont(new Font("Arial", Font.BOLD, 20));
-		Label10.setText("Ciudad");
-		Label11 = new JLabel();
-		Label11.setText("Estado");
-		Label11.setFont(new Font("Arial", Font.BOLD, 20));
-		Label12 = new JLabel();
-		Label12.setFont(new Font("Arial", Font.BOLD, 20));
-		Label12.setText("D\u00EDa");
-		Label13 = new JLabel();
-		Label13.setText("Mes");
-		Label13.setFont(new Font("Arial", Font.BOLD, 20));
-		Label14 = new JLabel();
-		Label14.setFont(new Font("Arial", Font.BOLD, 20));
-		Label14.setText("A\u00F1o");
-		Label15 = new JLabel();
-		Label15.setFont(new Font("Arial", Font.BOLD, 20));
-		Label15.setText("Apellido Materno");
-		Label16 = new JLabel();
-		Label16.setFont(new Font("Arial", Font.BOLD, 20));
-		Label16.setText("Sexo");
-		tfApeP = new JTextField();
-		tfApeP.setFont(new Font("Arial", Font.PLAIN, 20));
-		tfNombre = new JTextField();
-		tfNombre.setFont(new Font("Arial", Font.PLAIN, 20));
-		tfNacionalidad = new JTextField();
-		tfNacionalidad.setFont(new Font("Arial", Font.PLAIN, 20));
-		tfAno = new JTextField();
-		tfAno.setFont(new Font("Arial", Font.PLAIN, 20));
-		tfCiudad = new JTextField();
-		tfCiudad.setFont(new Font("Arial", Font.PLAIN, 20));
-		tfEstado = new JTextField();
-		tfEstado.setFont(new Font("Arial", Font.PLAIN, 20));
-		tfApeM = new JTextField();
-		tfApeM.setFont(new Font("Arial", Font.PLAIN, 20));
-		btAtras = new JButton();
-		btAtras.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				vPass.cl.previous(vPass.panelCont);
-			}
-		});
-		btAtras.setFont(new Font("Arial", Font.PLAIN, 20));
-		btAtras.setText("Atr\u00E1s");
-		btNext = new JButton();
-		btNext.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				guardarInfo();
-				siguiente = true;
-				vPass.cl.next(vPass.panelCont);	
-			}
-		});
-		btNext.setText("Siguiente");
-		btNext.setFont(new Font("Arial", Font.PLAIN, 20));
-		btSalir = new JButton();
-		btSalir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				vPass.dispose();
-			}
-		});
-		btSalir.setFont(new Font("Arial", Font.PLAIN, 20));
-		btSalir.setText("Salir");
-		CurrentLayOut = new SpringLayout();
-		CurrentLayOut.putConstraint(SpringLayout.SOUTH, tfNacionalidad, 0, SpringLayout.SOUTH, tfCiudad);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, tfCiudad, 36, SpringLayout.WEST, this);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, tfCiudad, -50, SpringLayout.WEST, tfEstado);
-		CurrentLayOut.putConstraint(SpringLayout.SOUTH, tfEstado, 40, SpringLayout.SOUTH, Label11);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfNacionalidad, 6, SpringLayout.SOUTH, Label4);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, tfNacionalidad, 0, SpringLayout.WEST, Label4);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, tfNacionalidad, -196, SpringLayout.EAST, this);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfEstado, 6, SpringLayout.SOUTH, Label11);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, tfEstado, 0, SpringLayout.WEST, Label11);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, tfEstado, 0, SpringLayout.EAST, tfNombre);
-		CurrentLayOut.putConstraint(SpringLayout.SOUTH, tfCiudad, 39, SpringLayout.SOUTH, Label10);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, tfNombre, -469, SpringLayout.EAST, this);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, tfNombre, 36, SpringLayout.WEST, this);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, lblFecha, -433, SpringLayout.WEST, Label16);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfCiudad, 6, SpringLayout.SOUTH, Label10);
-		CurrentLayOut.putConstraint(SpringLayout.SOUTH, lblFecha, -6, SpringLayout.NORTH, Label12);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, Label12, -57, SpringLayout.WEST, Label14);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label12, 275, SpringLayout.NORTH, this);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label13, 0, SpringLayout.NORTH, Label12);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, Label13, 0, SpringLayout.WEST, Label2);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfAno, 6, SpringLayout.SOUTH, Label14);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, Label3, 36, SpringLayout.WEST, this);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, Label6, 0, SpringLayout.WEST, Label2);
-		CurrentLayOut.putConstraint(SpringLayout.SOUTH, Label6, -6, SpringLayout.NORTH, Label10);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label10, 410, SpringLayout.NORTH, this);
-		CurrentLayOut.putConstraint(SpringLayout.SOUTH, btNext, -10, SpringLayout.SOUTH, this);
-		CurrentLayOut.putConstraint(SpringLayout.SOUTH, btAtras, -10, SpringLayout.SOUTH, this);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, tfAno, 0, SpringLayout.WEST, Label11);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label14, 0, SpringLayout.NORTH, Label12);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, Label14, 0, SpringLayout.WEST, Label11);
-		CurrentLayOut.putConstraint(SpringLayout.SOUTH, btSalir, -10, SpringLayout.SOUTH, this);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, btAtras, -6, SpringLayout.WEST, btNext);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, btNext, -6, SpringLayout.WEST, btSalir);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, btSalir, -24, SpringLayout.EAST, this);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label4, 0, SpringLayout.NORTH, Label10);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label16, 257, SpringLayout.NORTH, this);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label1, 10, SpringLayout.NORTH, this);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, Label1, 331, SpringLayout.WEST, this);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label7, 70, SpringLayout.NORTH, this);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, Label7, 81, SpringLayout.EAST, tfNombre);
-		CurrentLayOut.putConstraint(SpringLayout.SOUTH, Label7, -63, SpringLayout.NORTH, Label16);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, Label7, -39, SpringLayout.EAST, this);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfApeM, 0, SpringLayout.NORTH, tfApeP);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, tfApeM, 0, SpringLayout.WEST, Label15);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, tfApeM, 0, SpringLayout.EAST, tfNombre);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, tfApeP, 87, SpringLayout.EAST, Label2);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label15, 0, SpringLayout.NORTH, Label2);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, Label15, 114, SpringLayout.EAST, Label2);
-		CurrentLayOut.putConstraint(SpringLayout.SOUTH, Label3, -8, SpringLayout.NORTH, tfNombre);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label2, 16, SpringLayout.SOUTH, tfNombre);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, Label16, -280, SpringLayout.EAST, this);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfNombre, 99, SpringLayout.NORTH, this);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, tfApeP, 6, SpringLayout.SOUTH, Label2);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, tfApeP, 36, SpringLayout.WEST, this);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, Label2, 0, SpringLayout.WEST, Label3);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, Label10, 36, SpringLayout.WEST, this);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, Label11, -645, SpringLayout.EAST, this);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, Label11, 0, SpringLayout.NORTH, Label10);
 		
 		setUpPanel();
 	}
 
 	@SuppressWarnings("unchecked")
 	private void setUpPanel() {
-		// TODO Auto-generated method stub
-		this.setLayout(CurrentLayOut);
-		this.add(Label1);
-		this.add(Label2);
-		this.add(Label3);
-		this.add(Label4);
-		this.add(lblFecha);
-		this.add(Label6);
-		this.add(Label7);
-		this.add(Label10);
-		this.add(Label11);
-		this.add(Label12);
-		this.add(Label13);
-		this.add(Label14);
-		this.add(Label15);
-		this.add(Label16);
-		this.add(tfApeP);
-		this.add(tfNombre);
-		this.add(tfNacionalidad);
-		this.add(tfAno);
-		this.add(tfCiudad);
-		this.add(tfEstado);
-		this.add(tfApeM);
-		this.add(btAtras);
-		this.add(btNext);
-		this.add(btSalir);
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[]{35, 159, 80, 38, 189, 60, 43, 38, 48, 39, 117, 73, 0};
+		gridBagLayout.rowHeights = new int[]{34, 24, 30, 15, 24, 30, 15, 24, 24, 37, 15, 24, 24, 34, 16, 63, 33, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		setLayout(gridBagLayout);
+		Label1 = new JLabel();
+		Label1.setFont(new Font("Tahoma", Font.BOLD, 28));
+		Label1.setText("DATOS PERSONALES");
+		GridBagConstraints gbc_Label1 = new GridBagConstraints();
+		gbc_Label1.anchor = GridBagConstraints.NORTHWEST;
+		gbc_Label1.insets = new Insets(0, 0, 5, 5);
+		gbc_Label1.gridwidth = 3;
+		gbc_Label1.gridx = 4;
+		gbc_Label1.gridy = 0;
+		this.add(Label1, gbc_Label1);
+		Label3 = new JLabel();
+		Label3.setText("Nombre(s)");
+		Label3.setFont(new Font("Arial", Font.BOLD, 20));
+		GridBagConstraints gbc_Label3 = new GridBagConstraints();
+		gbc_Label3.anchor = GridBagConstraints.NORTHWEST;
+		gbc_Label3.insets = new Insets(0, 0, 5, 5);
+		gbc_Label3.gridx = 1;
+		gbc_Label3.gridy = 1;
+		this.add(Label3, gbc_Label3);
+		Label7 = new JLabel();
+		Label7.setIcon(new ImageIcon("img//ff.png"));
+		GridBagConstraints gbc_Label7 = new GridBagConstraints();
+		gbc_Label7.fill = GridBagConstraints.BOTH;
+		gbc_Label7.insets = new Insets(0, 0, 5, 0);
+		gbc_Label7.gridheight = 5;
+		gbc_Label7.gridwidth = 6;
+		gbc_Label7.gridx = 6;
+		gbc_Label7.gridy = 1;
+		this.add(Label7, gbc_Label7);
+		tfNombre = new JTextField();
+		tfNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				Validar(tfNombre,lblAdvertenciaNombre);
+			}
+		});
+		tfNombre.setFont(new Font("Arial", Font.PLAIN, 20));
+		GridBagConstraints gbc_tfNombre = new GridBagConstraints();
+		gbc_tfNombre.anchor = GridBagConstraints.NORTH;
+		gbc_tfNombre.fill = GridBagConstraints.HORIZONTAL;
+		gbc_tfNombre.insets = new Insets(0, 0, 5, 5);
+		gbc_tfNombre.gridwidth = 4;
+		gbc_tfNombre.gridx = 1;
+		gbc_tfNombre.gridy = 2;
+		this.add(tfNombre, gbc_tfNombre);
+		
+		lblAdvertenciaNombre = new JLabel("Ingrese solo letras");
+		lblAdvertenciaNombre.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblAdvertenciaNombre.setForeground(new Color(255, 0, 0));
+		GridBagConstraints gbc_lblAdvertenciaNombre = new GridBagConstraints();
+		gbc_lblAdvertenciaNombre.anchor = GridBagConstraints.NORTH;
+		gbc_lblAdvertenciaNombre.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblAdvertenciaNombre.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAdvertenciaNombre.gridwidth = 2;
+		gbc_lblAdvertenciaNombre.gridx = 1;
+		gbc_lblAdvertenciaNombre.gridy = 3;
+		add(lblAdvertenciaNombre, gbc_lblAdvertenciaNombre);
+		Label2 = new JLabel();
+		Label2.setFont(new Font("Arial", Font.BOLD, 20));
+		Label2.setText("Apellido Paterno");
+		GridBagConstraints gbc_Label2 = new GridBagConstraints();
+		gbc_Label2.anchor = GridBagConstraints.NORTHEAST;
+		gbc_Label2.insets = new Insets(0, 0, 5, 5);
+		gbc_Label2.gridx = 1;
+		gbc_Label2.gridy = 4;
+		this.add(Label2, gbc_Label2);
+		Label15 = new JLabel();
+		Label15.setFont(new Font("Arial", Font.BOLD, 20));
+		Label15.setText("Apellido Materno");
+		GridBagConstraints gbc_Label15 = new GridBagConstraints();
+		gbc_Label15.anchor = GridBagConstraints.NORTHWEST;
+		gbc_Label15.insets = new Insets(0, 0, 5, 5);
+		gbc_Label15.gridwidth = 2;
+		gbc_Label15.gridx = 3;
+		gbc_Label15.gridy = 4;
+		this.add(Label15, gbc_Label15);
+		tfApeP = new JTextField();
+		tfApeP.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				Validar(tfApeP, lblAdvertenciaApep);
+			}
+		});
+		tfApeP.setFont(new Font("Arial", Font.PLAIN, 20));
+		GridBagConstraints gbc_tfApeP = new GridBagConstraints();
+		gbc_tfApeP.anchor = GridBagConstraints.NORTH;
+		gbc_tfApeP.fill = GridBagConstraints.HORIZONTAL;
+		gbc_tfApeP.insets = new Insets(0, 0, 5, 5);
+		gbc_tfApeP.gridwidth = 2;
+		gbc_tfApeP.gridx = 1;
+		gbc_tfApeP.gridy = 5;
+		this.add(tfApeP, gbc_tfApeP);
+		tfApeM = new JTextField();
+		tfApeM.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				Validar(tfApeM, lblAdvertenciaApem);
+			}
+		});
+		tfApeM.setFont(new Font("Arial", Font.PLAIN, 20));
+		GridBagConstraints gbc_tfApeM = new GridBagConstraints();
+		gbc_tfApeM.anchor = GridBagConstraints.NORTH;
+		gbc_tfApeM.fill = GridBagConstraints.HORIZONTAL;
+		gbc_tfApeM.insets = new Insets(0, 0, 5, 5);
+		gbc_tfApeM.gridwidth = 2;
+		gbc_tfApeM.gridx = 3;
+		gbc_tfApeM.gridy = 5;
+		this.add(tfApeM, gbc_tfApeM);
+		
+		lblAdvertenciaApep = new JLabel("Ingrese solo letras");
+		lblAdvertenciaApep.setForeground(Color.RED);
+		lblAdvertenciaApep.setFont(new Font("Tahoma", Font.BOLD, 12));
+		GridBagConstraints gbc_lblAdvertenciaApep = new GridBagConstraints();
+		gbc_lblAdvertenciaApep.anchor = GridBagConstraints.NORTH;
+		gbc_lblAdvertenciaApep.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblAdvertenciaApep.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAdvertenciaApep.gridx = 1;
+		gbc_lblAdvertenciaApep.gridy = 6;
+		add(lblAdvertenciaApep, gbc_lblAdvertenciaApep);
+		
+		lblAdvertenciaApem = new JLabel("Ingrese solo letras");
+		lblAdvertenciaApem.setForeground(Color.RED);
+		lblAdvertenciaApem.setFont(new Font("Tahoma", Font.BOLD, 12));
+		GridBagConstraints gbc_lblAdvertenciaApem = new GridBagConstraints();
+		gbc_lblAdvertenciaApem.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblAdvertenciaApem.anchor = GridBagConstraints.NORTH;
+		gbc_lblAdvertenciaApem.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAdvertenciaApem.gridwidth = 2;
+		gbc_lblAdvertenciaApem.gridx = 3;
+		gbc_lblAdvertenciaApem.gridy = 6;
+		add(lblAdvertenciaApem, gbc_lblAdvertenciaApem);
+		lblFecha = new JLabel();
+		lblFecha.setText("Fecha de Nacimiento:\r\n");
+		lblFecha.setToolTipText("");
+		lblFecha.setFont(new Font("Arial", Font.BOLD, 20));
+		GridBagConstraints gbc_lblFecha = new GridBagConstraints();
+		gbc_lblFecha.anchor = GridBagConstraints.NORTHWEST;
+		gbc_lblFecha.insets = new Insets(0, 0, 5, 5);
+		gbc_lblFecha.gridwidth = 2;
+		gbc_lblFecha.gridx = 1;
+		gbc_lblFecha.gridy = 7;
+		this.add(lblFecha, gbc_lblFecha);
+		Label16 = new JLabel();
+		Label16.setFont(new Font("Arial", Font.BOLD, 20));
+		Label16.setText("Sexo");
+		GridBagConstraints gbc_Label16 = new GridBagConstraints();
+		gbc_Label16.anchor = GridBagConstraints.WEST;
+		gbc_Label16.insets = new Insets(0, 0, 5, 5);
+		gbc_Label16.gridheight = 2;
+		gbc_Label16.gridx = 8;
+		gbc_Label16.gridy = 7;
+		this.add(Label16, gbc_Label16);
+		Label13 = new JLabel();
+		Label13.setText("Mes");
+		Label13.setFont(new Font("Arial", Font.BOLD, 20));
+		GridBagConstraints gbc_Label13 = new GridBagConstraints();
+		gbc_Label13.anchor = GridBagConstraints.NORTHWEST;
+		gbc_Label13.insets = new Insets(0, 0, 5, 5);
+		gbc_Label13.gridx = 1;
+		gbc_Label13.gridy = 8;
+		this.add(Label13, gbc_Label13);
+		Label12 = new JLabel();
+		Label12.setFont(new Font("Arial", Font.BOLD, 20));
+		Label12.setText("D\u00EDa");
+		GridBagConstraints gbc_Label12 = new GridBagConstraints();
+		gbc_Label12.anchor = GridBagConstraints.NORTHWEST;
+		gbc_Label12.insets = new Insets(0, 0, 5, 5);
+		gbc_Label12.gridx = 2;
+		gbc_Label12.gridy = 8;
+		this.add(Label12, gbc_Label12);
+		Label14 = new JLabel();
+		Label14.setFont(new Font("Arial", Font.BOLD, 20));
+		Label14.setText("A\u00F1o");
+		GridBagConstraints gbc_Label14 = new GridBagConstraints();
+		gbc_Label14.anchor = GridBagConstraints.NORTHWEST;
+		gbc_Label14.insets = new Insets(0, 0, 5, 5);
+		gbc_Label14.gridx = 3;
+		gbc_Label14.gridy = 8;
+		this.add(Label14, gbc_Label14);
+		tfAno = new JTextField();
+		tfAno.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				try {
+					Integer.parseInt(tfAno.getText());
+					lblAdvertenciaAno.setText("");
+					if(tfAno.getText().length() == 4) {
+						if((Integer.parseInt(tfAno.getText())) > 1800){
+							lblAdvertenciaAno.setText("");
+						}else {
+							lblAdvertenciaAno.setText("Ingrese un año valido");
+						}
+					}else {
+						lblAdvertenciaAno.setText("Ingrese un año valido");
+					}
+				}catch(NumberFormatException e) {
+					lblAdvertenciaAno.setText("Ingresa un año valido");
+				}
+			}
+		});
 		
 		
 		cbMes = new JComboBox();
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, cbMes, 0, SpringLayout.NORTH, tfAno);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, cbMes, 0, SpringLayout.WEST, Label2);
 		cbMes.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				if(arg0.getStateChange() == ItemEvent.SELECTED) {
@@ -278,41 +324,247 @@ public class PanelInfo extends JPanel {
 		cbMes.setMaximumRowCount(12);
 		cbMes.setToolTipText("");
 		cbMes.setFont(new Font("Arial", Font.PLAIN, 20));
-		add(cbMes);
+		GridBagConstraints gbc_cbMes = new GridBagConstraints();
+		gbc_cbMes.fill = GridBagConstraints.HORIZONTAL;
+		gbc_cbMes.insets = new Insets(0, 0, 5, 5);
+		gbc_cbMes.gridx = 1;
+		gbc_cbMes.gridy = 9;
+		add(cbMes, gbc_cbMes);
+		
+		cbDias = new JComboBox();
+		cbDias.setToolTipText("");
+		cbDias.setMaximumRowCount(33);
+		cbDias.setFont(new Font("Arial", Font.PLAIN, 20));
+		
+		GridBagConstraints gbc_cbDias = new GridBagConstraints();
+		gbc_cbDias.fill = GridBagConstraints.HORIZONTAL;
+		gbc_cbDias.anchor = GridBagConstraints.SOUTH;
+		gbc_cbDias.insets = new Insets(0, 0, 5, 5);
+		gbc_cbDias.gridx = 2;
+		gbc_cbDias.gridy = 9;
+		add(cbDias, gbc_cbDias);
+		tfAno.setFont(new Font("Arial", Font.PLAIN, 20));
+		GridBagConstraints gbc_tfAno = new GridBagConstraints();
+		gbc_tfAno.fill = GridBagConstraints.HORIZONTAL;
+		gbc_tfAno.insets = new Insets(0, 0, 5, 5);
+		gbc_tfAno.gridwidth = 2;
+		gbc_tfAno.gridx = 3;
+		gbc_tfAno.gridy = 9;
+		this.add(tfAno, gbc_tfAno);
 		
 		rdMasculino = new JRadioButton("M");
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, rdMasculino, 19, SpringLayout.SOUTH, Label16);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, tfAno, -199, SpringLayout.WEST, rdMasculino);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, Label4, 0, SpringLayout.EAST, rdMasculino);
 		rdMasculino.setSelected(true);
 		rdMasculino.setBackground(Color.WHITE);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, rdMasculino, 0, SpringLayout.WEST, Label16);
 		rdMasculino.setFont(new Font("Arial", Font.PLAIN, 20));
-		add(rdMasculino);
+		GridBagConstraints gbc_rdMasculino = new GridBagConstraints();
+		gbc_rdMasculino.anchor = GridBagConstraints.NORTHWEST;
+		gbc_rdMasculino.insets = new Insets(0, 0, 5, 5);
+		gbc_rdMasculino.gridx = 8;
+		gbc_rdMasculino.gridy = 9;
+		add(rdMasculino, gbc_rdMasculino);
+		
 		
 		rdFemenino = new JRadioButton("F");
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, rdFemenino, 106, SpringLayout.SOUTH, Label7);
 		rdFemenino.setBackground(Color.WHITE);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, rdFemenino, 20, SpringLayout.EAST, rdMasculino);
 		rdFemenino.setFont(new Font("Arial", Font.PLAIN, 20));
-		add(rdFemenino);
+		GridBagConstraints gbc_rdFemenino = new GridBagConstraints();
+		gbc_rdFemenino.anchor = GridBagConstraints.NORTHWEST;
+		gbc_rdFemenino.insets = new Insets(0, 0, 5, 5);
+		gbc_rdFemenino.gridx = 9;
+		gbc_rdFemenino.gridy = 9;
+		add(rdFemenino, gbc_rdFemenino);
 		bg = new ButtonGroup();
 		bg.add(rdMasculino);
 		bg.add(rdFemenino);
 		
-		cbDias = new JComboBox();
-		CurrentLayOut.putConstraint(SpringLayout.EAST, cbMes, -15, SpringLayout.WEST, cbDias);
-		CurrentLayOut.putConstraint(SpringLayout.NORTH, cbDias, 6, SpringLayout.SOUTH, Label12);
-		CurrentLayOut.putConstraint(SpringLayout.WEST, cbDias, 0, SpringLayout.WEST, Label12);
-		CurrentLayOut.putConstraint(SpringLayout.EAST, cbDias, 53, SpringLayout.WEST, Label12);
-		cbDias.setToolTipText("");
-		cbDias.setMaximumRowCount(33);
-		cbDias.setFont(new Font("Arial", Font.PLAIN, 20));
-		cbDias.setModel(new DefaultComboBoxModel(getDias(cbMes.getSelectedItem().toString())));
+		lblAdvertenciaAno = new JLabel("Ingrese un a\u00F1o valido");
+		lblAdvertenciaAno.setForeground(Color.RED);
+		lblAdvertenciaAno.setFont(new Font("Tahoma", Font.BOLD, 12));
+		GridBagConstraints gbc_lblAdvertenciaAno = new GridBagConstraints();
+		gbc_lblAdvertenciaAno.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblAdvertenciaAno.anchor = GridBagConstraints.NORTH;
+		gbc_lblAdvertenciaAno.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAdvertenciaAno.gridwidth = 2;
+		gbc_lblAdvertenciaAno.gridx = 3;
+		gbc_lblAdvertenciaAno.gridy = 10;
+		add(lblAdvertenciaAno, gbc_lblAdvertenciaAno);
+		Label6 = new JLabel();
+		Label6.setFont(new Font("Arial", Font.BOLD, 20));
+		Label6.setText("Lugar de Nacimiento");
+		GridBagConstraints gbc_Label6 = new GridBagConstraints();
+		gbc_Label6.anchor = GridBagConstraints.NORTHWEST;
+		gbc_Label6.insets = new Insets(0, 0, 5, 5);
+		gbc_Label6.gridwidth = 2;
+		gbc_Label6.gridx = 1;
+		gbc_Label6.gridy = 11;
+		this.add(Label6, gbc_Label6);
+		Label10 = new JLabel();
+		Label10.setFont(new Font("Arial", Font.BOLD, 20));
+		Label10.setText("Ciudad");
+		GridBagConstraints gbc_Label10 = new GridBagConstraints();
+		gbc_Label10.anchor = GridBagConstraints.NORTHWEST;
+		gbc_Label10.insets = new Insets(0, 0, 5, 5);
+		gbc_Label10.gridx = 1;
+		gbc_Label10.gridy = 12;
+		this.add(Label10, gbc_Label10);
+		Label11 = new JLabel();
+		Label11.setText("Estado");
+		Label11.setFont(new Font("Arial", Font.BOLD, 20));
+		GridBagConstraints gbc_Label11 = new GridBagConstraints();
+		gbc_Label11.anchor = GridBagConstraints.NORTHWEST;
+		gbc_Label11.insets = new Insets(0, 0, 5, 5);
+		gbc_Label11.gridwidth = 2;
+		gbc_Label11.gridx = 3;
+		gbc_Label11.gridy = 12;
+		this.add(Label11, gbc_Label11);
+		Label4 = new JLabel();
+		Label4.setFont(new Font("Arial", Font.BOLD, 20));
+		Label4.setText("Nacionalidad");
+		GridBagConstraints gbc_Label4 = new GridBagConstraints();
+		gbc_Label4.anchor = GridBagConstraints.NORTHWEST;
+		gbc_Label4.insets = new Insets(0, 0, 5, 5);
+		gbc_Label4.gridwidth = 3;
+		gbc_Label4.gridx = 6;
+		gbc_Label4.gridy = 12;
+		this.add(Label4, gbc_Label4);
+		tfCiudad = new JTextField();
+		tfCiudad.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				Validar(tfCiudad, lblAdvertenciaCiudad);
+			}
+		});
+		tfCiudad.setFont(new Font("Arial", Font.PLAIN, 20));
+		GridBagConstraints gbc_tfCiudad = new GridBagConstraints();
+		gbc_tfCiudad.fill = GridBagConstraints.BOTH;
+		gbc_tfCiudad.insets = new Insets(0, 0, 5, 5);
+		gbc_tfCiudad.gridwidth = 2;
+		gbc_tfCiudad.gridx = 1;
+		gbc_tfCiudad.gridy = 13;
+		this.add(tfCiudad, gbc_tfCiudad);
+		tfEstado = new JTextField();
+		tfEstado.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				Validar(tfEstado, lblAdvertenciaEstado);
+			}
+		});
+		tfEstado.setFont(new Font("Arial", Font.PLAIN, 20));
+		GridBagConstraints gbc_tfEstado = new GridBagConstraints();
+		gbc_tfEstado.fill = GridBagConstraints.BOTH;
+		gbc_tfEstado.insets = new Insets(0, 0, 5, 5);
+		gbc_tfEstado.gridwidth = 2;
+		gbc_tfEstado.gridx = 3;
+		gbc_tfEstado.gridy = 13;
+		this.add(tfEstado, gbc_tfEstado);
+		tfNacionalidad = new JTextField();
+		tfNacionalidad.setFont(new Font("Arial", Font.PLAIN, 20));
+		GridBagConstraints gbc_tfNacionalidad = new GridBagConstraints();
+		gbc_tfNacionalidad.fill = GridBagConstraints.BOTH;
+		gbc_tfNacionalidad.insets = new Insets(0, 0, 5, 5);
+		gbc_tfNacionalidad.gridwidth = 5;
+		gbc_tfNacionalidad.gridx = 6;
+		gbc_tfNacionalidad.gridy = 13;
+		this.add(tfNacionalidad, gbc_tfNacionalidad);
 		
-		add(cbDias);
+		lblAdvertenciaCiudad = new JLabel("Ingrese una ciudad valida");
+		lblAdvertenciaCiudad.setForeground(Color.RED);
+		lblAdvertenciaCiudad.setFont(new Font("Tahoma", Font.BOLD, 12));
+		GridBagConstraints gbc_lblAdvertenciaCiudad = new GridBagConstraints();
+		gbc_lblAdvertenciaCiudad.anchor = GridBagConstraints.NORTH;
+		gbc_lblAdvertenciaCiudad.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblAdvertenciaCiudad.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAdvertenciaCiudad.gridwidth = 2;
+		gbc_lblAdvertenciaCiudad.gridx = 1;
+		gbc_lblAdvertenciaCiudad.gridy = 14;
+		add(lblAdvertenciaCiudad, gbc_lblAdvertenciaCiudad);
+		btNext = new JButton();
+		btNext.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println(Revision());
+				if(Revision()) {
+					guardarInfo();
+					siguiente = true;
+					vPass.cl.next(vPass.panelCont);	
+				}else {
+					JOptionPane.showMessageDialog(null, "Revise su información","Error",JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		});
+		btAtras = new JButton();
+		btAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				vPass.cl.previous(vPass.panelCont);
+			}
+		});
+		
+		lblAdvertenciaEstado = new JLabel("Ingrese un Estado valido");
+		lblAdvertenciaEstado.setForeground(Color.RED);
+		lblAdvertenciaEstado.setFont(new Font("Tahoma", Font.BOLD, 12));
+		GridBagConstraints gbc_lblAdvertenciaEstado = new GridBagConstraints();
+		gbc_lblAdvertenciaEstado.anchor = GridBagConstraints.SOUTH;
+		gbc_lblAdvertenciaEstado.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblAdvertenciaEstado.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAdvertenciaEstado.gridwidth = 2;
+		gbc_lblAdvertenciaEstado.gridx = 3;
+		gbc_lblAdvertenciaEstado.gridy = 14;
+		add(lblAdvertenciaEstado, gbc_lblAdvertenciaEstado);
+		btAtras.setFont(new Font("Arial", Font.PLAIN, 20));
+		btAtras.setText("Atr\u00E1s");
+		GridBagConstraints gbc_btAtras = new GridBagConstraints();
+		gbc_btAtras.anchor = GridBagConstraints.NORTHEAST;
+		gbc_btAtras.insets = new Insets(0, 0, 0, 5);
+		gbc_btAtras.gridwidth = 2;
+		gbc_btAtras.gridx = 8;
+		gbc_btAtras.gridy = 16;
+		this.add(btAtras, gbc_btAtras);
+		btNext.setText("Siguiente");
+		btNext.setFont(new Font("Arial", Font.PLAIN, 20));
+		GridBagConstraints gbc_btNext = new GridBagConstraints();
+		gbc_btNext.anchor = GridBagConstraints.NORTHWEST;
+		gbc_btNext.insets = new Insets(0, 0, 0, 5);
+		gbc_btNext.gridx = 10;
+		gbc_btNext.gridy = 16;
+		this.add(btNext, gbc_btNext);
+		btSalir = new JButton();
+		btSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				vPass.dispose();
+			}
+		});
+		btSalir.setFont(new Font("Arial", Font.PLAIN, 20));
+		btSalir.setText("Salir");
+		GridBagConstraints gbc_btSalir = new GridBagConstraints();
+		gbc_btSalir.anchor = GridBagConstraints.NORTHWEST;
+		gbc_btSalir.gridx = 11;
+		gbc_btSalir.gridy = 16;
+		this.add(btSalir, gbc_btSalir);
+		
+		
+		advertencias = new JLabel[]{lblAdvertenciaNombre,lblAdvertenciaApep,lblAdvertenciaApem,lblAdvertenciaAno,lblAdvertenciaCiudad,lblAdvertenciaEstado};
+		for(int i=0; i< advertencias.length ; i++) {
+			advertencias[i].setText("");
+			System.out.println(advertencias[i].getText());
+		}
 	}
 
+	public void Validar(JTextField tfValidar, JLabel lblAdvertencia) {
+		try {
+			String texto = tfValidar.getText().toString();
+			char inputChars[] = texto.toCharArray();
+				for(int i = 0; i < texto.length(); i++){
+					if(Character.isLetter(inputChars[i]) || inputChars[i] == ' '){
+						lblAdvertencia.setText("");
+					}
+					else{
+						throw new Exception();
+					}
+				}
+
+		}catch(Exception e) {
+			lblAdvertencia.setText("Ingresa solo letras");
+		}
+	}
 	public void guardarInfo() {
 		Integer[] meses = {1,2,3,4,5,6,7,8,9,10,11,12};
 		String fecha,mes,sexo,dia;
@@ -375,6 +627,34 @@ public class PanelInfo extends JPanel {
 		}
 		
 		return dias;
+	}
+	
+	public boolean Revision() {
+		boolean bien = false;
+		for(int i=0;i<advertencias.length;i++) {
+			if(advertencias[i].getText().equals("")) {
+				bien = true;
+			}else {
+				return false;
+			}
+		}
+		if(tfNombre.getText().equals("")) {
+			bien = false;
+		}else if(tfApeM.getText().equals("")) {
+			bien = false;
+		}else if(tfApeP.getText().equals("")) {
+			bien = false;
+		}else if(tfCiudad.getText().equals("")) {
+			bien = false;
+		}else if(tfEstado.getText().equals("")) {
+			bien = false;
+		}else if(tfNacionalidad.getText().equals("")) {
+			bien = false;
+		}else {
+			bien = true;
+		}
+		
+		return bien;
 	}
 	
 	public void Insertar() {

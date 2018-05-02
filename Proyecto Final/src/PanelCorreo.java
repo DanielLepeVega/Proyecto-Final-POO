@@ -1,12 +1,8 @@
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SpringLayout;
 import javax.swing.border.CompoundBorder;
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -246,11 +242,13 @@ public class PanelCorreo extends JPanel{
 					if(validate(tfCorreo.getText())) {
 						if(tfCorreo.getText().equals(tfConfirma.getText())){
 							System.out.println("Correos iguales");
-							int dialogResult = JOptionPane.showConfirmDialog (null, "¿Esta seguro de enviar la información?","Warning",JOptionPane.YES_NO_OPTION);
+							int dialogResult = JOptionPane.showConfirmDialog (null, "¿Esta seguro de enviar la información?","Atención",JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE);
 							if(dialogResult == JOptionPane.YES_OPTION){
 								guardarInfo();
 								siguiente = true;
 								Insertar();
+								JOptionPane.showMessageDialog(null, "Gracias por registrarse, recibirá una notificación de aprobación lo más pronto posible.","Registro Completado",JOptionPane.INFORMATION_MESSAGE);
+								vPass.dispose();
 							}
 							
 						}else {
